@@ -21,6 +21,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ListComponent } from './components/shared/list/list.component';
 import { ModalComponent } from './components/shared/modal/modal.component';
 import { SuggestiveSellingComponent } from './components/shared/suggestive-selling/suggestive-selling.component';
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
+import { ThumbsComponent } from './components/shared/thumbs/thumbs.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SuggestiveSellingComponent } from './components/shared/suggestive-selli
     ListComponent,
     ModalComponent,
     CartComponent,
-    SuggestiveSellingComponent
+    SuggestiveSellingComponent,
+    PaginationComponent,
+    ThumbsComponent
   ],
   imports: [
     BrowserModule,

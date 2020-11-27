@@ -1,5 +1,5 @@
 import { ProductService } from './../../services/product.service';
-import { CartItem } from './../../models/cart-item';
+import { CartItem, ProductItem } from './../../models/cart-item';
 import { BehaviorSubject } from 'rxjs';
 import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,14 +12,14 @@ import { Component, OnInit } from '@angular/core';
 export class CartComponent implements OnInit {
 
   cartItems$ = new BehaviorSubject<CartItem[]>([]);
+  productItems$ = new BehaviorSubject<ProductItem[]>([]);
   constructor(
     private readonly cartService: ShoppingCartService,
     private readonly productService: ProductService
   ) { }
 
   ngOnInit(): void {
-    /* Get cartitems */
-    // console.log('items:', this.cartService.getCartItems());
+    /* Get cartitems - only grab cartItems if cart is empty */
     this.cartService.getCartItems();
     this.cartService.cartItems$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
@@ -27,9 +27,13 @@ export class CartComponent implements OnInit {
   }
 
   public getProducts() {
-    this.productService.getProductItems();
-    this.productService.productItems$.subscribe(products => {
-      console.log({ products });
+
+    /* only grab products if products are empty */
+    if (this.productItems$.value.length <= 0) {
+      this.productService.getProductItems();
+    }
+    this.productService.productItems$.subscribe(items => {
+      this.productItems$.next(items);
     });
   }
 

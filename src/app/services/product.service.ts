@@ -23,7 +23,7 @@ export class ProductService {
   getProductItems(): ProductItem[] {
     this.http.get('http://localhost:3000/api/productsDBs')
       .subscribe((prods: ProductItem[]) => {
-        console.log({ prods });
+        // console.log({ prods });
         this.product$.next(prods);
       });
     return;

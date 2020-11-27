@@ -23,7 +23,7 @@ export class ShoppingCartService {
   getCartItems(): CartItem[] {
     this.http.get('http://localhost:3000/api/carts')
       .subscribe((res: CartItem[]) => {
-        console.log({ res });
+        // console.log({ res });
         this.cart$.next(res);
       });
     return;
