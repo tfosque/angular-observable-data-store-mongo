@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.css";
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
 
 /* // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { ... }
@@ -12,3 +12,10 @@
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { ... } */
+
+h5 {
+  text-transform: uppercase;
+  color: #007bff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}

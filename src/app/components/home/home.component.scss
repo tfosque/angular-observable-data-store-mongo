@@ -1,0 +1,19 @@
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 800px;
+  min-height: 100vh;
+
+  button {
+    text-align: center;
+  }
+}
+
+/* TODO: div.home {
+  ::ngdeep {
+    * {
+      color: pink;
+    }
+  }
+} */

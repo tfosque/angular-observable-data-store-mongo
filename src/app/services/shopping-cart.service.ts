@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item';
 
@@ -14,11 +15,19 @@ export class ShoppingCartService {
   // Exposed observable (read-only).
   readonly cartItems$ = this.cart$.asObservable();
 
-  constructor() { }
+  constructor(
+    private readonly http: HttpClient
+  ) { }
 
-  // Get last value without subscribing to the puppies$ observable (synchronously).
+  // Get last value without subscribing to the cartItems$ observable (synchronously).
   getCartItems(): CartItem[] {
-    return this.cart$.getValue();
+    this.http.get('http://localhost:3000/api/carts')
+      .subscribe((res: CartItem[]) => {
+        console.log({ res });
+        this.cart$.next(res);
+      });
+    return;
+    // return this.cart$.getValue();
   }
 
   private setCart(items: CartItem[]): void {

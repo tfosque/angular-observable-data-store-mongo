@@ -1,11 +1,27 @@
 export class CartItem {
   id?: number | string;
-  desc?: string;
+  title?: string;
+  product?: Product;
   price: number;
   quantity: number;
   uom?: string;
   name: string;
   sku?: string;
   total: number;
-  imgUrl: string;
+  imgUrl?: string;
+}
+
+interface Product {
+  name: string;
+  url?: string;
+  item: string;
+  price: number;
+  sale?: boolean;
+  color?: string;
+  qty: number;
+  link?: string;
+}
+
+export interface ProductItem extends CartItem {
+  misc?: any;
 }
