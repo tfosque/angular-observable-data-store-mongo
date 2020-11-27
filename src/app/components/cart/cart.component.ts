@@ -13,6 +13,9 @@ export class CartComponent implements OnInit {
 
   cartItems$ = new BehaviorSubject<CartItem[]>([]);
   productItems$ = new BehaviorSubject<ProductItem[]>([]);
+
+  /* pagingation */
+  pageSize = 25;
   constructor(
     private readonly cartService: ShoppingCartService,
     private readonly productService: ProductService
@@ -27,11 +30,11 @@ export class CartComponent implements OnInit {
   }
 
   public getProducts() {
-
     /* only grab products if products are empty */
     if (this.productItems$.value.length <= 0) {
       this.productService.getProductItems();
     }
+    /* watch products for changes */
     this.productService.productItems$.subscribe(items => {
       this.productItems$.next(items);
     });

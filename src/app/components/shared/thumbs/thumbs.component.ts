@@ -11,7 +11,6 @@ export class ThumbsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('imgUrl', this.imgUrl)
   }
 
 }

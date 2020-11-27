@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ProductItem } from 'src/app/models/cart-item';
 
@@ -7,20 +7,13 @@ import { ProductItem } from 'src/app/models/cart-item';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit, OnChanges {
+export class ModalComponent implements OnInit {
   // TODO: Change Detection Remove
   @Input() products = new BehaviorSubject<ProductItem[]>([]);
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log('products::input', this.products);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    // Add '${implements OnChanges}' to the class.
-    console.log({ changes });
   }
 
 }

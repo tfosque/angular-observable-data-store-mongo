@@ -10,46 +10,30 @@
       </div>
       <div class="modal-body" style="max-height: 444px; overflow-y: scroll" *ngIf="true">
         <!-- Display products -->
-
         <section class="mt-5">
           <div class="row">
             <ng-container *ngFor="let item of products">
               <div class="col-lg-4 col-sm-6 mb-3">
-                <div style="border: solid thin #e8e8e8;">
-                  <a href="#" class="card-link" style="text-align: center; font-size: .75rem;">
-                    <img [src]="item.imgUrl" class="img-fluid" style="width: 100%" />
-                    <div class="product-name">{{item.name}}</div>
-                  </a>
-                </div>
+                <app-thumbs [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
               </div>
             </ng-container>
           </div>
-
         </section>
-
       </div>
-      <div class="modal-footer">
-        <app-pagination></app-pagination>
-        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+      <!-- Modal Footer -->
+      <div class="modal-footer" style="justify-content: flex-start;">
+        <div class="row">
+          <div class="col-7">
+            <app-pagination></app-pagination>
+          </div>
+          <div class="col-5">
+            <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save To Cart</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- <section class="mt-5">
-  <ng-container *ngIf="(products | async)?.length > 0">
-    <h4>Test</h4>
-    <div class="row">
-      <ng-container *ngFor="let item of products | async | slice:0:8">
-        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
-          <div style="border: solid thin #e8e8e8;">
-            <a href="#" class="card-link" style="text-align: center; font-size: .75rem;">
-              <img [src]="imgUrl" class="img-fluid" style="width: 100%" />
-              <div class="product-name">{{label}}</div>
-            </a>
-          </div>
-        </div>
-      </ng-container>
-    </div>
-  </ng-container>
-</section> -->
