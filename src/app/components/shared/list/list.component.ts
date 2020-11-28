@@ -10,6 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 // TODO: Remove onChangePush Detection
 export class ListComponent implements OnInit {
   @Input() items: any[] = [];
+
   constructor() { }
 
   ngOnInit(): void {

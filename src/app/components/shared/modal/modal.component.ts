@@ -16,4 +16,8 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setPage(evt: any) {
+    console.log({ evt });
+  }
+
 }

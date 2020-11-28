@@ -11,9 +11,12 @@ export class ProductService {
   // expose it as puppies$ observable (read-only) instead.
   // Write to product$ only through specified store methods below.
   private readonly product$ = new BehaviorSubject<ProductItem[]>([]);
+  private readonly pageSize = new BehaviorSubject<number>(25);
 
   // Exposed observable (read-only).
   readonly productItems$ = this.product$.asObservable();
+
+  readonly pageSize$ = this.pageSize.asObservable();
 
   constructor(
     private readonly http: HttpClient
@@ -42,6 +45,11 @@ export class ProductService {
   removeProductItem(item: ProductItem): void {
     const results = this.getProductItems().filter(i => i.id !== item.id);
     this.setProduct(results);
+  }
+
+  setPageSize(size: number) {
+    console.log('size:', size * 25);
+    this.pageSize.next(size * 25);
   }
 
 }

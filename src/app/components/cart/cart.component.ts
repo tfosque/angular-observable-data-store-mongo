@@ -15,11 +15,14 @@ export class CartComponent implements OnInit {
   productItems$ = new BehaviorSubject<ProductItem[]>([]);
 
   /* pagingation */
-  pageSize = 25;
+  pageSize: number;
   constructor(
     private readonly cartService: ShoppingCartService,
     private readonly productService: ProductService
-  ) { }
+  ) {
+    /* Init PageSize */
+    this.pageSize = 25;
+  }
 
   ngOnInit(): void {
     /* Get cartitems - only grab cartItems if cart is empty */
@@ -27,6 +30,11 @@ export class CartComponent implements OnInit {
     this.cartService.cartItems$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
     });
+    /* Watch PageSize */
+    this.productService.pageSize$.subscribe((size: number) => {
+      this.pageSize = size;
+    });
+
   }
 
   public getProducts() {

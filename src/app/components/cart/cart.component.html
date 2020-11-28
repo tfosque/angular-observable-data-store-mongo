@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="col-12 mt-3">
-    <h5>Shopping Cart</h5>
+  <div class="col-12 mt-3 mb-1">
     <button data-toggle="modal" data-target="#exampleModal" (click)="getProducts()" type="button"
-      class="btn btn-primary">
+      class="btn btn-primary float-right">
       <span> Add Products</span> &nbsp;<i class="fa fa-plus"></i>
     </button>
-    <hr>
-    <app-list [items]="cartItems$ | async"></app-list>
+  </div>
+  <div class="col-12">
+    <app-list label="Shopping Cart" [items]="cartItems$ | async"></app-list>
   </div>
 </div>
-<app-modal [products]="productItems$ | async | slice:0:12">
+<app-modal [products]="productItems$ | async | slice:0:pageSize">
 </app-modal>

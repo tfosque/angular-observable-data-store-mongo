@@ -1,1 +1,8 @@
-<p>suggestive-selling works!</p>
+<div class="row">
+  <div class="col-12 text-center">
+    <h4>Customers Also Boughts</h4>
+  </div>
+  <div class="col-2" *ngFor="let item of cats">
+    <img class="img-fluid" [src]="item.url" />
+  </div>
+</div>
