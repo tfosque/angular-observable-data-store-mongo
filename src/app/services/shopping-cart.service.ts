@@ -11,9 +11,11 @@ export class ShoppingCartService {
   // expose it as puppies$ observable (read-only) instead.
   // Write to cart$ only through specified store methods below.
   private readonly cart$ = new BehaviorSubject<CartItem[]>([]);
+  private readonly cartCount = new BehaviorSubject<number>(0);
 
   // Exposed observable (read-only).
   readonly cartItems$ = this.cart$.asObservable();
+  readonly cartCount$ = this.cartCount.asObservable();
 
   constructor(
     private readonly http: HttpClient
@@ -25,6 +27,7 @@ export class ShoppingCartService {
       .subscribe((res: CartItem[]) => {
         // console.log({ res });
         this.cart$.next(res);
+        this.cartCount.next(res.length);
       });
     return;
     // return this.cart$.getValue();
@@ -32,11 +35,12 @@ export class ShoppingCartService {
 
   private setCart(items: any[]): void {
     this.cart$.next(items);
+    this.cartCount.next(items.length);
   }
 
   addCartItems(items: CartItem[]): void {
     const results = [...this.cart$.value, ...items];
-    console.log({ results });
+    // console.log({ results });
     const payload: CartItem[] = [];
 
     items.map((i: CartItem) => {
@@ -48,7 +52,7 @@ export class ShoppingCartService {
       });
     });
 
-    const body = JSON.stringify(items);
+    //  const body = JSON.stringify(items);
     console.log({ payload });
 
     this.http.post('http://localhost:3000/api/carts', payload)
@@ -62,13 +66,11 @@ export class ShoppingCartService {
 
   removeCartItem(item: CartItem): void {
     const results = this.cart$.value.filter(i => i.id !== item.id);
-    this.setCart(results);
+    this.http.delete(`http://localhost:3000/api/carts/${item.id}`).subscribe(status => {
+      console.log({ status }, { item });
+      this.setCart(results);
+    });
+
   }
 
-  /* adoptPuppy(item: CartItem): void {
-    const puppies = this.getCartItems().map(i =>
-      i.id === item.id ? new CartItem() : i
-    );
-    this.setCart(puppies);
-  } */
 }

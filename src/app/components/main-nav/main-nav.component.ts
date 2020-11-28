@@ -1,3 +1,4 @@
+import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-nav.component.scss']
 })
 export class MainNavComponent implements OnInit {
-
-  constructor() { }
+  cartCount = 0;
+  constructor(
+    private readonly cartService: ShoppingCartService
+  ) { }
 
   ngOnInit(): void {
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+      console.log({ count })
+    });
   }
 
 }
