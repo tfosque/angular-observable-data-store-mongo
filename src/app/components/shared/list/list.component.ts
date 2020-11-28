@@ -1,4 +1,6 @@
+import { ShoppingCartService } from './../../../services/shopping-cart.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { CartItem } from 'src/app/models/cart-item';
 
 @Component({
   selector: 'app-list',
@@ -11,9 +13,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ListComponent implements OnInit {
   @Input() items: any[] = [];
 
-  constructor() { }
+  constructor(
+    private readonly cartService: ShoppingCartService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  deleteItem(item: CartItem) {
+    console.log({ item });
+    this.cartService.removeCartItem(item);
   }
 
 }

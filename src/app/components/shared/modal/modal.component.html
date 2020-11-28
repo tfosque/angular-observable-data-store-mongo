@@ -14,7 +14,7 @@
           <div class="row">
             <ng-container *ngFor="let item of products">
               <div class="col-lg-4 col-sm-6 mb-3">
-                <app-thumbs [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
+                <app-thumbs (click)="addSelected(item)" [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
               </div>
             </ng-container>
           </div>
@@ -28,8 +28,10 @@
           </div>
           <div class="col-5">
             <div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save To Cart</button>
+              <button (click)="clearSelections()" type="button" class="btn btn-secondary"
+                data-dismiss="modal">Close</button>
+              <button (click)="saveSelectionsToCart()" type="button" class="btn btn-primary" data-dismiss="modal">Save
+                To Cart</button>
             </div>
           </div>
         </div>

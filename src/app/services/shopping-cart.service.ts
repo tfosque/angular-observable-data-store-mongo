@@ -30,17 +30,38 @@ export class ShoppingCartService {
     // return this.cart$.getValue();
   }
 
-  private setCart(items: CartItem[]): void {
+  private setCart(items: any[]): void {
     this.cart$.next(items);
   }
 
-  addCartItem(item: CartItem): void {
-    const results = [...this.getCartItems(), item];
-    this.setCart(results);
+  addCartItems(items: CartItem[]): void {
+    const results = [...this.cart$.value, ...items];
+    console.log({ results });
+    const payload: CartItem[] = [];
+
+    items.map((i: CartItem) => {
+      payload.push({
+        name: i.name,
+        price: i.price,
+        qty: i.qty,
+        total: i.total
+      });
+    });
+
+    const body = JSON.stringify(items);
+    console.log({ payload });
+
+    this.http.post('http://localhost:3000/api/carts', payload)
+      .subscribe((res: any) => {
+        console.log({ res });
+        this.setCart(results);
+      });
+    return;
+
   }
 
   removeCartItem(item: CartItem): void {
-    const results = this.getCartItems().filter(i => i.id !== item.id);
+    const results = this.cart$.value.filter(i => i.id !== item.id);
     this.setCart(results);
   }
 

@@ -1,5 +1,7 @@
 <div class="list-group">
   <div class="list-group-item" *ngFor="let item of items">
     {{ item.name }}
+    <span (click)="deleteItem(item)" class="float-right" style="cursor: pointer"><i
+        class="fa fa-trash text-secondary  "></i></span>
   </div>
 </div>

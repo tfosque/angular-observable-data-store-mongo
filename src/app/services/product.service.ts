@@ -12,11 +12,13 @@ export class ProductService {
   // Write to product$ only through specified store methods below.
   private readonly product$ = new BehaviorSubject<ProductItem[]>([]);
   private readonly pageSize = new BehaviorSubject<number>(25);
+  private readonly selectedProducts = new BehaviorSubject<ProductItem[]>([]);
 
   // Exposed observable (read-only).
   readonly productItems$ = this.product$.asObservable();
 
   readonly pageSize$ = this.pageSize.asObservable();
+  readonly selectedProducts$ = this.selectedProducts.asObservable();
 
   constructor(
     private readonly http: HttpClient
@@ -50,6 +52,18 @@ export class ProductService {
   setPageSize(size: number) {
     console.log('size:', size * 25);
     this.pageSize.next(size * 25);
+  }
+
+  addToSelectedProducts(item: any) {
+    const currSelections = this.selectedProducts.value;
+    const updatedSelections = [...currSelections, item];
+    console.log({ currSelections });
+    console.log({ updatedSelections });
+    this.selectedProducts.next(updatedSelections);
+  }
+
+  clearSelections() {
+    this.selectedProducts.next([]);
   }
 
 }

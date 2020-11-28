@@ -3,12 +3,15 @@ export class CartItem {
   title?: string;
   product?: Product;
   price: number;
-  quantity: number;
+  quantity?: number;
   uom?: string;
   name: string;
   sku?: string;
   total: number;
   imgUrl?: string;
+  qty: number;
+  desc?: string;
+
 }
 
 interface Product {
