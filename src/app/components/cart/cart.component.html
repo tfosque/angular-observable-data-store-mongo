@@ -1,13 +1,14 @@
-<div class="row">
-  <div class="col-12 mt-3 mb-1">
-    <button data-toggle="modal" data-target="#exampleModal" (click)="getProducts()" type="button"
-      class="btn btn-primary float-right">
-      <span> Add Products</span> &nbsp;<i class="fa fa-plus"></i>
-    </button>
-  </div>
-  <div class="col-12">
-    <app-list label="Shopping Cart" [items]="cartItems$ | async"></app-list>
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 mb-1">
+      <button data-toggle="modal" data-target="#exampleModal" (click)="getProducts()" type="button"
+        class="btn btn-primary float-right">
+        <span> Add Products</span> &nbsp;<i class="fa fa-plus"></i>
+      </button>
+    </div>
+    <div class="col-12">
+      <app-list label="Shopping Cart" [items]="cartItems$ | async"></app-list>
+    </div>
   </div>
 </div>
-<app-modal [products]="productItems$ | async | slice:0:pageSize">
-</app-modal>
+<app-modal></app-modal>

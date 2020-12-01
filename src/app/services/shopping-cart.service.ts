@@ -7,14 +7,14 @@ import { CartItem } from '../models/cart-item';
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  // Make cart$ private so it's not accessible from the outside, 
+  // Make cartItems private so it's not accessible from the outside, 
   // expose it as puppies$ observable (read-only) instead.
-  // Write to cart$ only through specified store methods below.
-  private readonly cart$ = new BehaviorSubject<CartItem[]>([]);
+  // Write to cartItems only through specified store methods below.
+  private readonly cartItems = new BehaviorSubject<CartItem[]>([]);
   private readonly cartCount = new BehaviorSubject<number>(0);
 
   // Exposed observable (read-only).
-  readonly cartItems$ = this.cart$.asObservable();
+  readonly cartItems$ = this.cartItems.asObservable();
   readonly cartCount$ = this.cartCount.asObservable();
 
   constructor(
@@ -26,23 +26,25 @@ export class ShoppingCartService {
     this.http.get('http://localhost:3000/api/carts')
       .subscribe((res: CartItem[]) => {
         // console.log({ res });
-        this.cart$.next(res);
+        this.cartItems.next(res);
         this.cartCount.next(res.length);
       });
     return;
-    // return this.cart$.getValue();
+    // return this.cartItems.getValue();
   }
 
-  private setCart(items: any[]): void {
-    this.cart$.next(items);
+  private setCart(items: CartItem[]): void {
+    this.cartItems.next(items);
     this.cartCount.next(items.length);
+    // console.log('setCart:cartItems', this.cartItems.value);
   }
-
   addCartItems(items: CartItem[]): void {
-    const results = [...this.cart$.value, ...items];
-    // console.log({ results });
-    const payload: CartItem[] = [];
+    this.getCartItems();
+    /* Check For Dups */
+    let newItems: CartItem[] = [];
 
+    /* Format payload */
+    const payload: CartItem[] = [];
     items.map((i: CartItem) => {
       payload.push({
         name: i.name,
@@ -52,22 +54,27 @@ export class ShoppingCartService {
       });
     });
 
-    //  const body = JSON.stringify(items);
-    console.log({ payload });
-
+    /* Post payload to Api */
     this.http.post('http://localhost:3000/api/carts', payload)
-      .subscribe((res: any) => {
-        console.log({ res });
-        this.setCart(results);
+      .subscribe((postResponse: any) => {
+        this.getCartItems();
+        newItems = [];
       });
     return;
+  }
 
+  clearCart(): void {
+    this.http.post('http://localhost:3000/api/carts/', [])
+      .subscribe(response => {
+        console.log({ response });
+      });
+    this.cartItems.next([]);
   }
 
   removeCartItem(item: CartItem): void {
-    const results = this.cart$.value.filter(i => i.id !== item.id);
+    const results = this.cartItems.value.filter(i => i.id !== item.id);
     this.http.delete(`http://localhost:3000/api/carts/${item.id}`).subscribe(status => {
-      console.log({ status }, { item });
+      // console.log({ status }, { item });
       this.setCart(results);
     });
 

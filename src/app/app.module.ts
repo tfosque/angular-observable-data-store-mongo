@@ -23,6 +23,8 @@ import { ModalComponent } from './components/shared/modal/modal.component';
 import { SuggestiveSellingComponent } from './components/shared/suggestive-selling/suggestive-selling.component';
 import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { ThumbsComponent } from './components/shared/thumbs/thumbs.component';
+import { CartNavComponent } from './components/cart/cart-nav/cart-nav.component';
+import { ShoppingCartListComponent } from './components/shopping-cart-list/shopping-cart-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ThumbsComponent } from './components/shared/thumbs/thumbs.component';
     CartComponent,
     SuggestiveSellingComponent,
     PaginationComponent,
-    ThumbsComponent
+    ThumbsComponent,
+    CartNavComponent,
+    ShoppingCartListComponent
   ],
   imports: [
     BrowserModule,

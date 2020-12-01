@@ -20,8 +20,12 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clearCart() {
+    this.cartService.clearCart();
+  }
+
   deleteItem(item: CartItem) {
-    console.log({ item });
+    // console.log({ item });
     this.cartService.removeCartItem(item);
   }
 

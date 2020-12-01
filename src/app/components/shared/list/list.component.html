@@ -1,7 +1,30 @@
 <div class="list-group">
+  <!-- Div Table Header -->
+  <div class="list-group-item">
+    <div class="row div-table-header text-primary">
+      <div class="col-5">Product</div>
+      <div class="col-2">Price</div>
+      <div class="col-1">Quantity</div>
+      <div class="offset-3 col-1">
+        <span (click)="clearCart()" class="btn btn-sm btn-outline-secondary">
+          Clear All
+        </span>
+      </div>
+    </div>
+  </div>
   <div class="list-group-item" *ngFor="let item of items">
-    {{ item.name }}
-    <span (click)="deleteItem(item)" class="float-right" style="cursor: pointer"><i
-        class="fa fa-trash text-secondary  "></i></span>
+    <div class="row">
+      <div class="col-5">
+        {{ item.name }}
+        <div class="text-secondary">{{ item.id }}</div>
+      </div>
+      <div class="col-2">{{ item.price | currency}}</div>
+      <div class="col-1">{{ item.quantity || item.qty }}</div>
+      <a class="offset-3 col-1 text-center">
+        <span (click)="deleteItem(item)" style="cursor: pointer">
+          <i class="fa fa-trash text-secondary"></i>
+        </span>
+      </a>
+    </div>
   </div>
 </div>

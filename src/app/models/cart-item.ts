@@ -11,6 +11,7 @@ export class CartItem {
   imgUrl?: string;
   qty: number;
   desc?: string;
+  selected?: boolean;
 
 }
 
@@ -23,6 +24,7 @@ interface Product {
   color?: string;
   qty: number;
   link?: string;
+  selected?: boolean;
 }
 
 export interface ProductItem extends CartItem {

@@ -15,7 +15,7 @@ export class MainNavComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
-      console.log({ count })
+      // console.log({ count })
     });
   }
 

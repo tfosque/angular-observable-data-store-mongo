@@ -39,11 +39,13 @@ export class CartComponent implements OnInit {
 
   public getProducts() {
     /* only grab products if products are empty */
-    if (this.productItems$.value.length <= 0) {
-      this.productService.getProductItems();
-    }
+    /*  if (this.productItems$.value.length <= 0) {
+       this.productService.getProductItems();
+     } */
+
+    this.productService.getProductItems();
     /* watch products for changes */
-    this.productService.productItems$.subscribe(items => {
+    this.productService.products$.subscribe(items => {
       this.productItems$.next(items);
     });
   }

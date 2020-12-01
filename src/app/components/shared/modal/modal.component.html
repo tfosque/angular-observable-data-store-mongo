@@ -3,8 +3,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Products</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">Products <span
+            class="badge badge-primary">{{ productCount }}</span></h5>
+        <button (click)="saveSelectionsToCart()" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -12,7 +13,7 @@
         <!-- Display products -->
         <section>
           <div class="row">
-            <ng-container *ngFor="let item of products">
+            <ng-container *ngFor="let item of products | async">
               <div class="col-lg-4 col-sm-6 mb-3">
                 <app-thumbs (click)="addSelected(item)" [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
               </div>
@@ -30,7 +31,8 @@
             <div class="btn-group btn-group-sm">
               <button (click)="clearSelections()" type="button" class="btn btn-secondary"
                 data-dismiss="modal">Close</button>
-              <button (click)="saveSelectionsToCart()" type="button" class="btn btn-primary" data-dismiss="modal">Save
+              <button (click)="[saveSelectionsToCart(), clearSelections()]" type="button" class="btn btn-primary"
+                data-dismiss="modal">Save
                 To Cart</button>
             </div>
           </div>
