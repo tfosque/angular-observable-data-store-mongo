@@ -9,9 +9,16 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" style="max-height: 444px; overflow-y: scroll" *ngIf="true">
+      <div class="modal-body" style="max-height: 444px; overflow-y: scroll">
+        <!-- Spinner -->
+        <div class="row">
+          <div class="col-12 text-center" *ngIf="(products | async)?.length < 1; showModal">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+            <div> loading products...</div>
+          </div>
+        </div>
         <!-- Display products -->
-        <section>
+        <section #showModal>
           <div class="row">
             <ng-container *ngFor="let item of products | async">
               <div class="col-lg-4 col-sm-6 mb-3">

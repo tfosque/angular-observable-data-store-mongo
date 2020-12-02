@@ -1,3 +1,4 @@
+import { MenuService } from './../../services/menu.service';
 import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,14 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainNavComponent implements OnInit {
   cartCount = 0;
+  activeMenuItem = '';
   constructor(
-    private readonly cartService: ShoppingCartService
+    private readonly cartService: ShoppingCartService,
+    private readonly menuService: MenuService
   ) { }
 
   ngOnInit(): void {
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
-      // console.log({ count })
+    });
+    this.menuService.activeMenuItem.subscribe(item => {
+      this.activeMenuItem = item;
     });
   }
 

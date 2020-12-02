@@ -1,14 +1,46 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 mt-3 mb-1">
-      <button data-toggle="modal" data-target="#exampleModal" (click)="getProducts()" type="button"
-        class="btn btn-primary float-right">
-        <span> Add Products</span> &nbsp;<i class="fa fa-plus"></i>
-      </button>
+    <div class="col-12 mt-3 mb-1 ">
+      <div class="btn-group float-right">
+        <button (click)="clearCart()" type="button" class="btn btn-outline- btn-sm">
+          <span> Clear Cart</span>
+        </button>
+        <button data-toggle="modal" data-target="#exampleModal" (click)="getProducts()" type="button"
+          class="btn btn-primary btn-sm">
+          <span> Add Products</span> &nbsp;<i class="fa fa-cart-plus"></i>
+        </button>
+      </div>
     </div>
     <div class="col-12">
-      <app-list label="Shopping Cart" [items]="cartItems$ | async"></app-list>
+      <div class="list-group">
+        <!-- Div Table Header -->
+        <div class="list-group-item">
+          <div class="row div-table-header text-primary">
+            <div class="col-5">Product</div>
+            <div class="col-2">Price</div>
+            <div class="col-1">Quantity</div>
+            <div class="offset-3 col-1">
+              <span (click)="clearCart()" class="btn btn-sm btn-outline-secondary">
+                Clear All
+              </span>
+            </div>
+          </div>
+        </div>
+        <div style="max-height: 547px; overflow-y: scroll;">
+          <app-list label="Shopping Cart" [items]="cartItems$ | async"></app-list>
+        </div>
+        <!-- more icon -->
+        <div class="col-12 pt-3 pb-3 text-center">more <i class="fa fa-caret-down"></i></div>
+      </div>
     </div>
+
+
+    <div class="col-12 pt-2 pb-2">
+      <div class="row">
+        <app-order-summary class="col-12"></app-order-summary>
+      </div>
+    </div>
+
   </div>
 </div>
 <app-modal></app-modal>

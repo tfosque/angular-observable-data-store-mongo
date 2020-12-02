@@ -1,0 +1,16 @@
+/* .navbar-nav li.navbar-item.active {
+  cursor: pointer;
+  margin-bottom: -8px;
+  color: red;
+  border-bottom: solid thick red;
+} */
+#navbarSupportedContent > ul > li.nav-item > a {
+  cursor: pointer;
+}
+
+#navbarSupportedContent > ul > li.nav-item.active > a {
+  text-decoration: none;
+  margin-bottom: -8px;
+  color: #007bff;
+  border-bottom: solid thick #007bff;
+}

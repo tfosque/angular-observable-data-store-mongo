@@ -25,6 +25,9 @@ import { PaginationComponent } from './components/shared/pagination/pagination.c
 import { ThumbsComponent } from './components/shared/thumbs/thumbs.component';
 import { CartNavComponent } from './components/cart/cart-nav/cart-nav.component';
 import { ShoppingCartListComponent } from './components/shopping-cart-list/shopping-cart-list.component';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { StoreComponent } from './components/store/store.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { ShoppingCartListComponent } from './components/shopping-cart-list/shopp
     PaginationComponent,
     ThumbsComponent,
     CartNavComponent,
-    ShoppingCartListComponent
+    ShoppingCartListComponent,
+    OrderSummaryComponent,
+    CheckoutComponent,
+    StoreComponent
   ],
   imports: [
     BrowserModule,

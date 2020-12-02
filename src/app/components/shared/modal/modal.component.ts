@@ -1,7 +1,7 @@
 import { CartItem } from './../../../models/cart-item';
 import { ShoppingCartService } from './../../../services/shopping-cart.service';
 import { ProductService } from './../../../services/product.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, from } from 'rxjs';
 import { ProductItem } from 'src/app/models/cart-item';
 import { filter } from 'lodash';
@@ -13,7 +13,7 @@ import { map } from 'rxjs/internal/operators/map';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, DoCheck {
   // TODO: Change Detection Remove
   products = new BehaviorSubject<ProductItem[]>([]);
   cart = new BehaviorSubject<ProductItem[]>([]);
@@ -25,23 +25,32 @@ export class ModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const innerCart = new BehaviorSubject<ProductItem[]>([]);
+    // const innerCart = new BehaviorSubject<ProductItem[]>([]);
+    console.log('modal-initialized');
 
-    this.cartService.cartItems$.subscribe(items => {
-      innerCart.next(items);
-      console.log({ innerCart });
-      this.cart.next(items);
+
+    this.cartService.cartItems$.subscribe(cartItems => {
+      // innerCart.next(items);
+      console.log({ cartItems });
+      this.cart.next(cartItems);
     });
+  }
 
+  ngDoCheck() {
+    console.log('modal-do check.....');
+
+  }
+
+  getProducts() {
     this.productService.products$.subscribe(products => {
       this.products.next(products);
       this.productCount = products.length;
     });
   }
-  removeCartItems(products, innerCart): ProductItem[] {
+  removeCartItems(products, cart): ProductItem[] {
     // console.log({ products }, { innerCart });
     /* Cart Item Ids */
-    const cids = innerCart.value.map(item => {
+    const cids = cart.value.map(item => {
       // console.log({ item });
       return item.name;
     });
@@ -76,8 +85,8 @@ export class ModalComponent implements OnInit {
   }
 
   saveSelectionsToCart() {
-    const selectedItems = this.productService.selected_Products;
-    console.log({ selectedItems });
+    const selectedItems = this.productService.selectedProductsValue;
+    console.log('modal:comp', { selectedItems });
     this.cartService.addCartItems(selectedItems);
   }
 

@@ -1,0 +1,23 @@
+.shorten-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.nav-btns > button {
+  text-transform: uppercase;
+  font-size: .75rem;
+  font-weight: bold;
+}
+
+div.cart-item {
+  &:hover {
+    border: solid thick #ced4dab5;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+} 
+
+div.cart-item.clicked {
+  box-shadow: 2px 3px #777676;
+}

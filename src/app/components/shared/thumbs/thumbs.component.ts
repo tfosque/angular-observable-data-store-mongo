@@ -1,3 +1,5 @@
+import { ProductItem } from 'src/app/models/cart-item';
+import { ProductService } from './../../../services/product.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -8,9 +10,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ThumbsComponent implements OnInit {
   @Input() imgUrl = '';
   @Input() label = '';
-  constructor() { }
+  selected = false;
+  selectedLabel = '';
+  constructor(
+    private readonly productService: ProductService
+  ) { }
 
   ngOnInit(): void {
+    /* this.productService.selectedProducts$.subscribe((s: ProductItem[]) => {     
+    }); */
   }
 
 }

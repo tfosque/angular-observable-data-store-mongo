@@ -1,12 +1,19 @@
-import { CartComponent } from './components/cart/cart.component';
+import { TemplatesComponent } from './components/templates/templates.component';
+import { StoreComponent } from './components/store/store.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { CartComponent } from './components/cart/cart.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'shopping-cart', component: CartComponent }
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', component: StoreComponent },
+  { path: 'shopping-cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'landing-page', component: LandingPageComponent },
+  { path: 'templates', component: TemplatesComponent }
 ];
 
 @NgModule({

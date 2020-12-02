@@ -1,3 +1,4 @@
+import { MenuService } from './../../services/menu.service';
 import { ProductService } from './../../services/product.service';
 import { CartItem, ProductItem } from './../../models/cart-item';
 import { BehaviorSubject } from 'rxjs';
@@ -15,24 +16,26 @@ export class CartComponent implements OnInit {
   productItems$ = new BehaviorSubject<ProductItem[]>([]);
 
   /* pagingation */
-  pageSize: number;
+  cartPageSize: number;
   constructor(
     private readonly cartService: ShoppingCartService,
-    private readonly productService: ProductService
+    private readonly productService: ProductService,
+    private readonly menuService: MenuService
   ) {
     /* Init PageSize */
-    this.pageSize = 25;
+    this.cartPageSize = 25;
   }
 
   ngOnInit(): void {
+    this.menuService.setActiveMenu('Shopping Cart');
     /* Get cartitems - only grab cartItems if cart is empty */
     this.cartService.getCartItems();
     this.cartService.cartItems$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
     });
-    /* Watch PageSize */
+    /* Watch PageSize for pagination */
     this.productService.pageSize$.subscribe((size: number) => {
-      this.pageSize = size;
+      this.cartPageSize = size;
     });
 
   }
@@ -48,6 +51,10 @@ export class CartComponent implements OnInit {
     this.productService.products$.subscribe(items => {
       this.productItems$.next(items);
     });
+  }
+
+  clearCart() {
+    this.cartService.clearCart();
   }
 
 }

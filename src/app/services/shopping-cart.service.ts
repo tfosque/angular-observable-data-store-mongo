@@ -1,3 +1,4 @@
+import { ProductService } from './product.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
@@ -18,7 +19,8 @@ export class ShoppingCartService {
   readonly cartCount$ = this.cartCount.asObservable();
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly productService: ProductService
   ) { }
 
   // Get last value without subscribing to the cartItems$ observable (synchronously).
@@ -39,6 +41,8 @@ export class ShoppingCartService {
     // console.log('setCart:cartItems', this.cartItems.value);
   }
   addCartItems(items: CartItem[]): void {
+    console.log({ items });
+
     this.getCartItems();
     /* Check For Dups */
     let newItems: CartItem[] = [];
@@ -62,13 +66,18 @@ export class ShoppingCartService {
       });
     return;
   }
+  clearSelectedProducts() {
+    /* try catch */
+    this.productService.clearSelections();
+  }
 
   clearCart(): void {
     this.http.post('http://localhost:3000/api/carts/', [])
       .subscribe(response => {
-        console.log({ response });
+        console.log('cart:service:', { response });
       });
     this.cartItems.next([]);
+    /* TODO: Clear MongodDB */
   }
 
   removeCartItem(item: CartItem): void {

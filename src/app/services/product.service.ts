@@ -1,15 +1,13 @@
-import { CartItem } from './../models/cart-item';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { ProductItem } from '../models/cart-item';
-import { uniqBy, filter } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  productCount = 0;
   // Make products$ private so it's not accessible from the outside, 
   // expose it as puppies$ observable (read-only) instead.
   // Write to products$ only through specified store methods below.
@@ -22,7 +20,7 @@ export class ProductService {
   readonly products$ = this.products.asObservable();
   readonly selectedProducts$ = this.selectedProducts.asObservable();
   readonly pageSize$ = this.pageSize.asObservable();
-  public selected_Products = this.selectedProducts.value;
+  public selectedProductsValue = this.selectedProducts.value;
 
   constructor(
     private readonly http: HttpClient
@@ -35,7 +33,7 @@ export class ProductService {
         if (this.products.value.length > 0) {
           this.removeProductItem(null, this.products.value);
         } else {
-          console.log({ products });
+          console.log('products:service:', { products });
           this.removeProductItem(null, products);
         }
         // this.products.next(products);
@@ -45,28 +43,25 @@ export class ProductService {
 
   private setProduct(items: ProductItem[]): void {
     this.products.next(items);
-    this.selected_Products = items;
+    this.selectedProductsValue = items;
+    this.productCount = items.length;
   }
   addProductItem(item: ProductItem): void {
-    const results = [...this.selected_Products, item];
-    console.log('addProductItem:', [...this.selected_Products, item]);
+    const results = [...this.selectedProductsValue, item];
+    console.log('products:addProductItem:', [...this.selectedProductsValue, item]);
 
     this.setProduct(results);
   }
   removeProductItem(item: ProductItem, store): void {
-    console.log({ store });
-    console.log({ item });
-
-    // const store = this.products.value; // this.products.value;
+    // console.log({ store });
     if (item === null) {
       this.setProduct(store);
       return;
     }
     const results = store.filter(i => i.id !== item.id);
     this.setProduct(results);
-
-    console.log('length:', results.length);
-    console.log({ results });
+    console.log('product:service:', { item });
+    console.log('product:service:length:', results.length);
   }
 
   setPageSize(size: number) {
@@ -79,16 +74,16 @@ export class ProductService {
 
     const currSelections = this.selectedProducts.value;
     const updatedSelections = [...currSelections, item];
-    console.log({ updatedSelections });
+    console.log('product:service', { updatedSelections });
     // console.log({ currSelections });
     // console.log({ updatedSelections });
 
     this.selectedProducts.next(updatedSelections);
-    this.selected_Products = updatedSelections;
+    this.selectedProductsValue = updatedSelections;
   }
   clearSelections() {
     this.selectedProducts.next([]);
-    this.selected_Products = [];
+    this.selectedProductsValue = [];
   }
 
 }
