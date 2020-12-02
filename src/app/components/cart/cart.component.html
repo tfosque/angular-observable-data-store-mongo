@@ -20,8 +20,8 @@
             <div class="col-2">Price</div>
             <div class="col-1">Quantity</div>
             <div class="offset-3 col-1">
-              <span (click)="clearCart()" class="btn btn-sm btn-outline-secondary">
-                Clear All
+              <span (click)="clearCart()" class="">
+                &nbsp;
               </span>
             </div>
           </div>
@@ -43,4 +43,4 @@
 
   </div>
 </div>
-<app-modal></app-modal>
+<app-modal [products]="products"></app-modal>

@@ -33,7 +33,7 @@ export class ProductService {
         if (this.products.value.length > 0) {
           this.removeProductItem(null, this.products.value);
         } else {
-          console.log('products:service:', { products });
+          // console.log('products:service:', { products });
           this.removeProductItem(null, products);
         }
         // this.products.next(products);

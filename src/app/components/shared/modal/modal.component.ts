@@ -1,6 +1,5 @@
-import { CartItem } from './../../../models/cart-item';
+import { ProductStoreService } from './../../../services/product-store.service';
 import { ShoppingCartService } from './../../../services/shopping-cart.service';
-import { ProductService } from './../../../services/product.service';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, from } from 'rxjs';
 import { ProductItem } from 'src/app/models/cart-item';
@@ -15,18 +14,18 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class ModalComponent implements OnInit, DoCheck {
   // TODO: Change Detection Remove
-  products = new BehaviorSubject<ProductItem[]>([]);
+  @Input() products = new BehaviorSubject<ProductItem[]>([]);
   cart = new BehaviorSubject<ProductItem[]>([]);
   productCount = 0;
 
   constructor(
-    private readonly productService: ProductService,
+    private readonly productStore: ProductStoreService,
     private readonly cartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {
     // const innerCart = new BehaviorSubject<ProductItem[]>([]);
-    console.log('modal-initialized');
+    console.log('modal:products:', this.products.value);
 
 
     this.cartService.cartItems$.subscribe(cartItems => {
@@ -37,15 +36,16 @@ export class ModalComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    console.log('modal-do check.....');
-
+    // console.log('modal-do check.....');
   }
 
   getProducts() {
-    this.productService.products$.subscribe(products => {
-      this.products.next(products);
-      this.productCount = products.length;
-    });
+    /* this.productStore.getProducts()
+      .subscribe(products => {
+        // this.products.next(products);
+        // this.productCount = products.length;
+        console.log({ products });
+      }); */
   }
   removeCartItems(products, cart): ProductItem[] {
     // console.log({ products }, { innerCart });
@@ -81,17 +81,17 @@ export class ModalComponent implements OnInit, DoCheck {
 
   addSelected(item: any) {
     // console.log({ item });
-    this.productService.addToSelectedProducts(item);
+    // this.productStore.addToSelectedProducts(item);
   }
 
   saveSelectionsToCart() {
-    const selectedItems = this.productService.selectedProductsValue;
-    console.log('modal:comp', { selectedItems });
-    this.cartService.addCartItems(selectedItems);
+    // const selectedItems = this.productStore.selectedProductsValue;
+    // console.log('modal:comp', { selectedItems });
+    // this.cartService.addCartItems(selectedItems);
   }
 
   clearSelections() {
-    this.productService.clearSelections();
+    // this.productStore.clearSelections();
   }
 
 }

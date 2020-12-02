@@ -1,11 +1,11 @@
-<div class="col-12 text-center" *ngIf="(products | async)?.length < 1;">
+<div class="col-12 text-center m-5" *ngIf="productsCount < 1;">
   <i class="fa fa-spinner fa-spin fa-2x"></i>
 </div>
 <div class="col-12 text-center toast">
   <app-toast></app-toast>
 </div>
 
-<div *ngIf="(products | async)?.length > 0;" class="row">
+<div *ngIf="true" class="row">
   <div class="col-12">
     <div class="row mt-4">
       <hr>
@@ -14,10 +14,11 @@
       </div>
       <div class="col-4 nav-btns btn-group btn-group-sm text-right">
         <button class="btn btn-secondary" (click)="clearSelections()">Clear Selections</button>
-        <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProducts.value.length <= 0}"
-          (click)="selectedProducts.value.length > 0 ? [saveSelectionsToCart(), sendNote({message: 'The selected products have been added to cart', show: true})] : null">
-          Save Selected Items To Cart&nbsp;<span
-            class="badge badge-warning">{{(selectedProducts | async)?.length}}</span>&nbsp;<i class="fa fa-save"></i>
+        <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProductsCount <= 0}" (click)="selectedProducts.value.length > 0 
+          ? [saveSelectionsToCart(), sendNote({message: 'The selected products have been added to cart', show: true})]
+          : null">
+          Save Selected Items To Cart&nbsp;<span class="badge badge-warning">{{ selectedProductsCount }}</span>&nbsp;<i
+            class="fa fa-save"></i>
         </button>
       </div>
     </div>
@@ -25,7 +26,7 @@
   </div>
   <div class="col-2 mt-1 mb-1" *ngFor="let product of products | async">
     <div class="card mb-3 mt-3">
-      <div (click)="setClicked(true)" class="card-body cart-item" [ngClass]="{ 'clicked': clicked }">
+      <div class="card-body cart-item">
         <div class="card mb-2">
           <app-thumbs (click)="addToSelectedProducts(product)" [imgUrl]="product.imgUrl" [label]="product.name">
           </app-thumbs>

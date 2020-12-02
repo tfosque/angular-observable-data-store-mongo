@@ -1,7 +1,8 @@
 import { MenuService } from './../../services/menu.service';
 import { ProductService } from './../../services/product.service';
+import { ProductStoreService } from './../../services/product-store.service';
 import { CartItem, ProductItem } from './../../models/cart-item';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -14,12 +15,15 @@ export class CartComponent implements OnInit {
 
   cartItems$ = new BehaviorSubject<CartItem[]>([]);
   productItems$ = new BehaviorSubject<ProductItem[]>([]);
+  products = new Subject<ProductItem[]>();
 
   /* pagingation */
   cartPageSize: number;
   constructor(
     private readonly cartService: ShoppingCartService,
     private readonly productService: ProductService,
+
+    private readonly productObsStore: ProductStoreService,
     private readonly menuService: MenuService
   ) {
     /* Init PageSize */
@@ -28,29 +32,32 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuService.setActiveMenu('Shopping Cart');
+
     /* Get cartitems - only grab cartItems if cart is empty */
     this.cartService.getCartItems();
     this.cartService.cartItems$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
     });
+
     /* Watch PageSize for pagination */
-    this.productService.pageSize$.subscribe((size: number) => {
+    this.productObsStore.pageSize$.subscribe((size: number) => {
       this.cartPageSize = size;
     });
-
   }
 
   public getProducts() {
     /* only grab products if products are empty */
-    /*  if (this.productItems$.value.length <= 0) {
-       this.productService.getProductItems();
-     } */
 
-    this.productService.getProductItems();
+    this.productObsStore.getProducts()
+      .subscribe(nextItems => {
+        this.products.next(nextItems);
+        console.log({ nextItems });
+      });
+
     /* watch products for changes */
-    this.productService.products$.subscribe(items => {
+    /* this.productService.products$.subscribe(items => {
       this.productItems$.next(items);
-    });
+    }); */
   }
 
   clearCart() {

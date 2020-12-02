@@ -20,7 +20,7 @@ export class ToastComponent implements OnInit {
     this.notificationService.sendNotification(this.note.value);
     this.notificationService.notification.subscribe(notes => {
       this.note.next(notes);
-      console.log('toast:notifications:', { notes });
+      // console.log('toast:notifications:', { notes });
     });
 
 
