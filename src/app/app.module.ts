@@ -28,6 +28,7 @@ import { ShoppingCartListComponent } from './components/shopping-cart-list/shopp
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { StoreComponent } from './components/store/store.component';
+import { ToastComponent } from './components/shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { StoreComponent } from './components/store/store.component';
     ShoppingCartListComponent,
     OrderSummaryComponent,
     CheckoutComponent,
-    StoreComponent
+    StoreComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

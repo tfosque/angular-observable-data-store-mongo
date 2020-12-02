@@ -1,9 +1,11 @@
+import { NotificationService } from 'src/app/services/notification.service';
 import { ShoppingCartService } from './../../services/shopping-cart.service';
 import { MenuService } from './../../services/menu.service';
-import { ProductItem, CartItem } from 'src/app/models/cart-item';
-import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ProductItem } from 'src/app/models/cart-item';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from './../../services/product.service';
 import { BehaviorSubject, of } from 'rxjs';
+import { Notification } from './../../models/notification';
 
 @Component({
   selector: 'app-store',
@@ -16,10 +18,12 @@ export class StoreComponent implements OnInit {
   selectedProducts = new BehaviorSubject<ProductItem[]>([]);
   clickedId = '';
   clicked = false;
+  note = {};
   constructor(
     private readonly productService: ProductService,
     private readonly menuService: MenuService,
-    private readonly cartService: ShoppingCartService
+    private readonly cartService: ShoppingCartService,
+    private readonly noteService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +40,6 @@ export class StoreComponent implements OnInit {
       this.products.next(prod);
       this.productsCount = prod.length;
       console.log('store:product:service', { prod });
-
     });
   }
   saveSelectionsToCart(): void {
@@ -49,6 +52,14 @@ export class StoreComponent implements OnInit {
     /*  this.productService.selectedProducts$.subscribe(selProd => {
        console.log('store:save:sel:toCart', { selProd });
      }); */
+  }
+
+  sendNote(note: Notification) {
+    console.log('store:sendNote', { note });
+    this.noteService.sendNotification(note);
+    setTimeout(() => {
+      this.noteService.sendNotification({ message: '', show: false });
+    }, 4000);
   }
 
   addToSelectedProducts(product: ProductItem) {

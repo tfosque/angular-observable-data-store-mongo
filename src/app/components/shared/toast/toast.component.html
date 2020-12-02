@@ -1,0 +1,16 @@
+<!-- <div class="toast" [ngStyle]="{'display': (note | async)?.show ? 'block' : 'none'}">
+  <div class="toast-body-container">
+    <div class="toast-header">
+      Toast Header
+    </div>
+    <div class="toast-body">
+      {{note.value.message}}
+    </div>
+  </div>
+</div> -->
+
+<div [ngStyle]="{'display': (note | async)?.show ? 'block' : 'none'}">
+  <div class="alert alert-primary" role="alert">
+    <span><i class="fa fa-shopping-cart"></i>&nbsp;{{note.value.message}}</span>
+  </div>
+</div>

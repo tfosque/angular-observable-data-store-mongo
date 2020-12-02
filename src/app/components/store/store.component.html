@@ -1,6 +1,9 @@
 <div class="col-12 text-center" *ngIf="(products | async)?.length < 1;">
   <i class="fa fa-spinner fa-spin fa-2x"></i>
 </div>
+<div class="col-12 text-center toast">
+  <app-toast></app-toast>
+</div>
 
 <div *ngIf="(products | async)?.length > 0;" class="row">
   <div class="col-12">
@@ -12,7 +15,7 @@
       <div class="col-4 nav-btns btn-group btn-group-sm text-right">
         <button class="btn btn-secondary" (click)="clearSelections()">Clear Selections</button>
         <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProducts.value.length <= 0}"
-          (click)="selectedProducts.value.length > 0 ? saveSelectionsToCart() : null">
+          (click)="selectedProducts.value.length > 0 ? [saveSelectionsToCart(), sendNote({message: 'The selected products have been added to cart', show: true})] : null">
           Save Selected Items To Cart&nbsp;<span
             class="badge badge-warning">{{(selectedProducts | async)?.length}}</span>&nbsp;<i class="fa fa-save"></i>
         </button>
