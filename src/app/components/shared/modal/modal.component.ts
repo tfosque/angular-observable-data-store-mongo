@@ -1,7 +1,7 @@
+import { Pagination } from './../../../models/pagination';
 import { ProductStoreService } from './../../../services/product-store.service';
-import { ShoppingCartService } from './../../../services/shopping-cart.service';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { CartItem, ProductItem } from 'src/app/models/cart-item';
 import { filter } from 'lodash';
 import { exit } from 'process';
@@ -17,22 +17,23 @@ export class ModalComponent implements OnInit, DoCheck {
   @Input() products = new BehaviorSubject<ProductItem[]>([]);
   @Input() cart$ = new BehaviorSubject<CartItem[]>([]);
   cart = new BehaviorSubject<ProductItem[]>([]);
+  productPagination$ = new BehaviorSubject<Pagination>({});
   productCount = 0;
 
   constructor(
-    private readonly productStore: ProductStoreService,
-    private readonly cartService: ShoppingCartService
+    private readonly productStore: ProductStoreService
   ) { }
 
   ngOnInit(): void {
-    // const innerCart = new BehaviorSubject<ProductItem[]>([]);
-    console.log('modal:products:', this.products.value);
-
-    this.cartService.cartItems$.subscribe(cartItems => {
-      // innerCart.next(items);
-      console.log({ cartItems });
-      this.cart.next(cartItems);
+    // this.productStore.setPageSize({ size: 50, start: 0, end: 50 });
+    this.productStore.productPagination$.subscribe(page => {
+      this.productPagination$.next(page);
+      console.log({ page });
     });
+    this.productStore.getProductCnt()
+      .subscribe(cnt => {
+        this.productCount = cnt;
+      });
   }
 
   ngDoCheck() {

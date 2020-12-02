@@ -1,3 +1,4 @@
+import { Pagination } from './../models/pagination';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ProductItem } from '../models/cart-item';
@@ -11,18 +12,20 @@ export class ProductStoreService {
   private productsCnt$ = new Subject<number>();
   private selectedProductsCnt$ = new Subject<number>();
   private selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
-  pageSize$ = new BehaviorSubject<number>(25);
+  productPageSize$ = new BehaviorSubject<number>(100);
+  productPagination$ = new Subject<Pagination>();
 
   constructor(
     private readonly http: HttpClient
   ) {
-    // Research Best Practices this on fires once per session
+    // TODO: Research Best Practices this on fires once per session
     /* this.http.get('http://localhost:3000/api/productsDBs')
       .subscribe((data: ProductItem[]) => {
         this.products$.next(data);
         this.updateProductCnt(data);
         console.log('fetching......');
       }); */
+    /* Set default ProductPageSize */
   }
 
   getProducts(): Observable<ProductItem[]> {
@@ -85,6 +88,7 @@ export class ProductStoreService {
   }
   clearSelections() {
     this.selectedProducts$.next([]);
+
     /* Add original products back 500 */
     const fetchProducts = this.getProducts();
     fetchProducts.subscribe(productUpdate => {
@@ -95,6 +99,10 @@ export class ProductStoreService {
   }
 
 
-  /* Paging */
-  setPageSize(size: number) { }
+  /* Pagination */
+  setPageSize(pg: Pagination): void {
+    console.log(pg);
+    this.productPagination$.next(pg);
+    // return this.productPagination$.asObservable();
+  }
 }

@@ -20,7 +20,8 @@
         <!-- Display products -->
         <section #showModal>
           <div class="row">
-            <ng-container *ngFor="let item of products | async">
+            <ng-container
+              *ngFor="let item of products | async | slice:productPagination$.value.start:productPagination$.value.end">
               <div class="col-lg-4 col-sm-6 mb-3">
                 <app-thumbs (click)="addSelected(item)" [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
               </div>

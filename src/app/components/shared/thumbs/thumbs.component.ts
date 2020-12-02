@@ -21,4 +21,8 @@ export class ThumbsComponent implements OnInit {
     }); */
   }
 
+  toggleSelected() {
+    this.selected = !this.selected;
+  }
+
 }

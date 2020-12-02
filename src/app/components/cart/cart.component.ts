@@ -1,3 +1,4 @@
+import { Pagination } from './../../models/pagination';
 import { MenuService } from './../../services/menu.service';
 import { ProductService } from './../../services/product.service';
 import { ProductStoreService } from './../../services/product-store.service';
@@ -19,10 +20,9 @@ export class CartComponent implements OnInit {
 
   /* pagingation */
   cartPageSize: number;
+  productPagination: Pagination = {};
   constructor(
     private readonly cartService: ShoppingCartService,
-    private readonly productService: ProductService,
-
     private readonly productObsStore: ProductStoreService,
     private readonly menuService: MenuService
   ) {
@@ -40,24 +40,22 @@ export class CartComponent implements OnInit {
     });
 
     /* Watch PageSize for pagination */
-    this.productObsStore.pageSize$.subscribe((size: number) => {
-      this.cartPageSize = size;
-    });
+    /*  this.productObsStore.productPageSize$.subscribe((size: number) => {
+       this.cartPageSize = size;
+     }); */
   }
 
   public getProducts() {
-    /* only grab products if products are empty */
-
+    this.productObsStore.setPageSize({ size: 50, start: 0, end: 50 });
     this.productObsStore.getProducts()
-      .subscribe(nextItems => {
-        this.products.next(nextItems);
-        console.log({ nextItems });
+      .subscribe(nextProducts => {
+        this.products.next(nextProducts);
+        console.log({ nextProducts });
       });
+  }
 
-    /* watch products for changes */
-    /* this.productService.products$.subscribe(items => {
-      this.productItems$.next(items);
-    }); */
+  setProductPagination(page: Pagination) {
+    this.productObsStore.setPageSize(page);
   }
 
   clearCart() {

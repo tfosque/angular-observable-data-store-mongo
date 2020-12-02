@@ -1,5 +1,8 @@
-<div style="border: solid thin #e8e8e8;" [ngClass]="{ 'background-color': selected ? 'gold' : ''}">
+<div (click)="toggleSelected()" style="border: solid thin #e8e8e8; border-radius: 6px;"
+  [ngStyle]="{ 'background-color': selected ? 'gold' : '', 'box-shadow':  selected ? '0 0 5px 2px #0a0a09c7' : ''}">
   <div class="card-link" style="text-align: center; font-size: .75rem;">
+    <div [ngStyle]="{ 'display': selected ? 'block' : 'none'}" style="position: inherit; top:0; left:0;"><i
+        class="fa fa-check fa-sm"></i></div>
     <img [src]="imgUrl" class="img-fluid" style="width: 100%" />
     <div class="product-name">{{label}}</div>
   </div>
