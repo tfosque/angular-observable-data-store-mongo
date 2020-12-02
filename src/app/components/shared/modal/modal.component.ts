@@ -2,7 +2,7 @@ import { ProductStoreService } from './../../../services/product-store.service';
 import { ShoppingCartService } from './../../../services/shopping-cart.service';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, from } from 'rxjs';
-import { ProductItem } from 'src/app/models/cart-item';
+import { CartItem, ProductItem } from 'src/app/models/cart-item';
 import { filter } from 'lodash';
 import { exit } from 'process';
 import { map } from 'rxjs/internal/operators/map';
@@ -15,6 +15,7 @@ import { map } from 'rxjs/internal/operators/map';
 export class ModalComponent implements OnInit, DoCheck {
   // TODO: Change Detection Remove
   @Input() products = new BehaviorSubject<ProductItem[]>([]);
+  @Input() cart$ = new BehaviorSubject<CartItem[]>([]);
   cart = new BehaviorSubject<ProductItem[]>([]);
   productCount = 0;
 
@@ -27,7 +28,6 @@ export class ModalComponent implements OnInit, DoCheck {
     // const innerCart = new BehaviorSubject<ProductItem[]>([]);
     console.log('modal:products:', this.products.value);
 
-
     this.cartService.cartItems$.subscribe(cartItems => {
       // innerCart.next(items);
       console.log({ cartItems });
@@ -39,15 +39,8 @@ export class ModalComponent implements OnInit, DoCheck {
     // console.log('modal-do check.....');
   }
 
-  getProducts() {
-    /* this.productStore.getProducts()
-      .subscribe(products => {
-        // this.products.next(products);
-        // this.productCount = products.length;
-        console.log({ products });
-      }); */
-  }
-  removeCartItems(products, cart): ProductItem[] {
+  getProducts() { }
+  removeCartItems(products: ProductItem[], cart: any): ProductItem[] {
     // console.log({ products }, { innerCart });
     /* Cart Item Ids */
     const cids = cart.value.map(item => {
