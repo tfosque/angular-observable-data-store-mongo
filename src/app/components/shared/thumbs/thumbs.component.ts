@@ -1,3 +1,5 @@
+import { LogoutComponent } from './../../logout/logout.component';
+import { BehaviorSubject } from 'rxjs';
 import { ProductItem } from 'src/app/models/cart-item';
 import { ProductService } from './../../../services/product.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -10,16 +12,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ThumbsComponent implements OnInit {
   @Input() imgUrl = '';
   @Input() label = '';
+  // @Input() resetSelected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   selected = false;
-  selectedLabel = '';
   constructor(
     private readonly productService: ProductService
   ) { }
 
-  ngOnInit(): void {
-    /* this.productService.selectedProducts$.subscribe((s: ProductItem[]) => {     
-    }); */
-  }
+  ngOnInit(): void { }
 
   toggleSelected() {
     this.selected = !this.selected;

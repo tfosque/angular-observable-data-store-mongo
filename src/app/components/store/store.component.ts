@@ -1,6 +1,7 @@
+import { CartItem } from './../../models/cart-item';
 import { ProductStoreService } from './../../services/product-store.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { ShoppingCartService } from './../../services/shopping-cart.service';
+import { CartService } from './../../services/cart.service';
 import { MenuService } from './../../services/menu.service';
 import { ProductItem } from 'src/app/models/cart-item';
 import { Component, OnInit } from '@angular/core';
@@ -19,10 +20,11 @@ export class StoreComponent implements OnInit {
   selectedProducts = new BehaviorSubject<ProductItem[]>([]);
   clicked = false;
   note = {};
+  // resetSelected$ = new BehaviorSubject<boolean>(false);
   constructor(
     // private readonly productService: ProductService,
     private readonly menuService: MenuService,
-    private readonly cartService: ShoppingCartService,
+    private readonly cartService: CartService,
     private readonly noteService: NotificationService,
     private readonly productObsStore: ProductStoreService
   ) { }
@@ -37,21 +39,31 @@ export class StoreComponent implements OnInit {
         this.products.next(products);
       });
 
+    /* Get Selected Products */
+    this.productObsStore.getSelectedProducts()
+      .subscribe(updateSelections => {
+        this.selectedProducts.next(updateSelections);
+        console.log({ updateSelections });
+      });
+
     /* Get Product Cnt */
     this.productObsStore.getProductCnt()
       .subscribe(cnt => {
         this.productsCount = cnt;
       });
+
     /* Get Selected Product Cnt */
     this.productObsStore.getSelectedProductsCnt().subscribe(selectedCnt => {
+      console.log({ selectedCnt });
       this.selectedProductsCount = selectedCnt.length;
     });
   }
-  saveSelectionsToCart(): void {
-    this.cartService.addCartItems(this.selectedProducts.value);
+  saveSelectionsToCart(sels: CartItem[]): void {
+    // console.log('sels:', { sels });
+    this.cartService.saveSelectionsToCart(sels);
 
-    /* Clear Selected Items */
-    this.clearSelections();
+    /* reset all selected products styles */
+    // this.resetSelected$.next(true);
   }
 
   /* TODO: Redo Notification Component and Service */
@@ -70,7 +82,12 @@ export class StoreComponent implements OnInit {
   /* TODO: Create component to handle state; Set trigger for Style of Clicked Items */
   setClicked(isClicked: boolean) { }
 
+  /* resetSelected() {
+    this.resetSelected$ = true;
+  } */
+
   clearSelections() {
     this.productObsStore.clearSelections();
+    this.productObsStore.getProducts();
   }
 }

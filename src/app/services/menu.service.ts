@@ -11,7 +11,5 @@ export class MenuService {
 
   setActiveMenu(activeMenu: string) {
     this.activeMenuItem.next(activeMenu);
-    console.log('activeMenu:', this.activeMenuItem.value);
-
   }
 }

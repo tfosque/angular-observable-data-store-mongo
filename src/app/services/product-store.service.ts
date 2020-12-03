@@ -80,7 +80,7 @@ export class ProductStoreService {
     console.log('currSelections:', this.selectedProducts$.value);
 
     this.updateSelectedProductCnt(currSelections);
-    // console.log('cnt', currSelections.length);
+    this.selectedProductsCnt$.next(currSelections.length);
   }
 
   private updateSelectedProductCnt(products: ProductItem[]) {
@@ -88,14 +88,16 @@ export class ProductStoreService {
   }
   clearSelections() {
     this.selectedProducts$.next([]);
+  }
 
+  reFetchProducts() {
     /* Add original products back 500 */
-    const fetchProducts = this.getProducts();
-    fetchProducts.subscribe(productUpdate => {
-      this.products$.next(productUpdate);
-      this.updateProductCnt(productUpdate);
-      this.updateSelectedProductCnt([]);
-    });
+    this.getProducts()
+      .subscribe(productUpdate => {
+        this.products$.next(productUpdate);
+        this.updateProductCnt(productUpdate);
+        this.updateSelectedProductCnt([]);
+      });
   }
 
 

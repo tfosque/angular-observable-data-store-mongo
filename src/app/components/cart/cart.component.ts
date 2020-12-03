@@ -1,10 +1,9 @@
 import { Pagination } from './../../models/pagination';
 import { MenuService } from './../../services/menu.service';
-import { ProductService } from './../../services/product.service';
 import { ProductStoreService } from './../../services/product-store.service';
 import { CartItem, ProductItem } from './../../models/cart-item';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ShoppingCartService } from './../../services/shopping-cart.service';
+import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -22,7 +21,7 @@ export class CartComponent implements OnInit {
   cartPageSize: number;
   productPagination: Pagination = {};
   constructor(
-    private readonly cartService: ShoppingCartService,
+    private readonly cartService: CartService,
     private readonly productObsStore: ProductStoreService,
     private readonly menuService: MenuService
   ) {
@@ -35,7 +34,7 @@ export class CartComponent implements OnInit {
 
     /* Get cartitems - only grab cartItems if cart is empty */
     this.cartService.getCartItems();
-    this.cartService.cartItems$.subscribe(nextItems => {
+    this.cartService.cart$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
     });
 

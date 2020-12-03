@@ -14,8 +14,8 @@
       </div>
       <div class="col-4 nav-btns btn-group btn-group-sm text-right">
         <button class="btn btn-secondary" (click)="clearSelections()">Clear Selections</button>
-        <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProductsCount <= 0}" (click)="selectedProducts.value.length > 0 
-          ? [saveSelectionsToCart(), sendNote({message: 'The selected products have been added to cart', show: true})]
+        <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProductsCount <= 0}" (click)="selectedProductsCount > 0 
+          ? [saveSelectionsToCart(selectedProducts.value), sendNote({message: 'The selected products have been added to cart', show: true})]
           : null">
           Save Selected Items To Cart&nbsp;<span class="badge badge-warning">{{ selectedProductsCount }}</span>&nbsp;<i
             class="fa fa-save"></i>
