@@ -1,11 +1,9 @@
+import { CartService } from 'src/app/services/cart.service';
 import { Pagination } from './../../../models/pagination';
 import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CartItem, ProductItem } from 'src/app/models/cart-item';
-import { filter } from 'lodash';
-import { exit } from 'process';
-import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-modal',
@@ -16,12 +14,14 @@ export class ModalComponent implements OnInit, DoCheck {
   // TODO: Change Detection Remove
   @Input() products = new BehaviorSubject<ProductItem[]>([]);
   @Input() cart$ = new BehaviorSubject<CartItem[]>([]);
+  selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
   cart = new BehaviorSubject<ProductItem[]>([]);
   productPagination$ = new BehaviorSubject<Pagination>({});
   productCount = 0;
 
   constructor(
-    private readonly productStore: ProductStoreService
+    private readonly productStore: ProductStoreService,
+    private readonly cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +34,11 @@ export class ModalComponent implements OnInit, DoCheck {
       .subscribe(cnt => {
         this.productCount = cnt;
       });
+
+    this.productStore.getSelectedProducts().subscribe(x => {
+      this.selectedProducts$.next(x);
+      console.log({ x });
+    });
   }
 
   ngDoCheck() {
@@ -69,23 +74,21 @@ export class ModalComponent implements OnInit, DoCheck {
     // return [];
   }
 
-  setPage(evt: any) {
-    // console.log({ evt });
+  setPage(page: Pagination) {
+    // console.log({ page });
   }
 
-  addSelected(item: any) {
-    // console.log({ item });
-    // this.productStore.addToSelectedProducts(item);
+  addSelected(item: ProductItem) {
+    console.log({ item });
+    this.productStore.addToSelectedProducts(item);
   }
 
-  saveSelectionsToCart() {
-    // const selectedItems = this.productStore.selectedProductsValue;
-    // console.log('modal:comp', { selectedItems });
-    // this.cartService.addCartItems(selectedItems);
+  saveSelectionsToCart(): void {
+    this.cartService.saveSelectionsToCart(this.selectedProducts$.value);
   }
 
   clearSelections() {
-    // this.productStore.clearSelections();
+    this.productStore.clearSelections();
   }
 
 }

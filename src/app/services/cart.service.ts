@@ -73,7 +73,7 @@ export class CartService {
       .subscribe((response: any) => {
         console.log({ response }, { payload });
         this.clearSelectedProducts();
-        // this.setCart(nextCart);
+        this.getCartItems();
         this.setCartCount(this.cart.value);
       });
 

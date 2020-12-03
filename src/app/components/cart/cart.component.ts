@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   cartItems$ = new BehaviorSubject<CartItem[]>([]);
   productItems$ = new BehaviorSubject<ProductItem[]>([]);
   products = new Subject<ProductItem[]>();
+  // selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
 
   /* pagingation */
   cartPageSize: number;
@@ -46,10 +47,11 @@ export class CartComponent implements OnInit {
 
   public getProducts() {
     this.productObsStore.setPageSize({ size: 50, start: 0, end: 50 });
+    /* Get Products */
     this.productObsStore.getProducts()
       .subscribe(nextProducts => {
         this.products.next(nextProducts);
-        console.log({ nextProducts });
+        // console.log({ nextProducts });
       });
   }
 

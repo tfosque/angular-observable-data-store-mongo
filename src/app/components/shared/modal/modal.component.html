@@ -23,6 +23,7 @@
             <ng-container
               *ngFor="let item of products | async | slice:productPagination$.value.start:productPagination$.value.end">
               <div class="col-lg-4 col-sm-6 mb-3">
+                <!-- List of Products -->
                 <app-thumbs (click)="addSelected(item)" [imgUrl]="item.imgUrl" [label]="item.name"></app-thumbs>
               </div>
             </ng-container>
@@ -40,8 +41,9 @@
               <button (click)="clearSelections()" type="button" class="btn btn-secondary"
                 data-dismiss="modal">Close</button>
               <button (click)="[saveSelectionsToCart(), clearSelections()]" type="button" class="btn btn-primary"
-                data-dismiss="modal">Save
-                To Cart</button>
+                data-dismiss="modal">
+                Save To Cart
+              </button>
             </div>
           </div>
         </div>

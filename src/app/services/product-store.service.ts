@@ -80,7 +80,7 @@ export class ProductStoreService {
     console.log('currSelections:', this.selectedProducts$.value);
 
     this.updateSelectedProductCnt(currSelections);
-    this.selectedProductsCnt$.next(currSelections.length);
+    // this.selectedProductsCnt$.next(currSelections.length);
   }
 
   private updateSelectedProductCnt(products: ProductItem[]) {
