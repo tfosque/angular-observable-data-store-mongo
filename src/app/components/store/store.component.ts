@@ -7,6 +7,7 @@ import { ProductItem } from 'src/app/models/cart-item';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Notification } from './../../models/notification';
+import { Pagination } from 'src/app/models/pagination';
 
 @Component({
   selector: 'app-store',
@@ -20,42 +21,54 @@ export class StoreComponent implements OnInit {
   selectedProducts = new BehaviorSubject<ProductItem[]>([]);
   clicked = false;
   note = {};
+  productsPagination: Pagination = {};
   // resetSelected$ = new BehaviorSubject<boolean>(false);
   constructor(
     // private readonly productService: ProductService,
     private readonly menuService: MenuService,
     private readonly cartService: CartService,
     private readonly noteService: NotificationService,
-    private readonly productObsStore: ProductStoreService
+    private readonly productStore: ProductStoreService
   ) { }
 
   ngOnInit(): void {
     /* Set active menu item */
     this.menuService.setActiveMenu('Store');
 
-    /* Get Products - productObsStore Service */
-    this.productObsStore.getProducts()
+    /* Get Products - productStore Service */
+    this.productStore.getProducts()
       .subscribe((products: ProductItem[]) => {
         this.products.next(products);
       });
 
     /* Get Selected Products */
-    this.productObsStore.getSelectedProducts()
+    this.productStore.getSelectedProducts()
       .subscribe(updateSelections => {
         this.selectedProducts.next(updateSelections);
-        console.log({ updateSelections });
+        // console.log({ updateSelections });
       });
 
     /* Get Product Cnt */
-    this.productObsStore.getProductCnt()
+    this.productStore.getProductCnt()
       .subscribe(cnt => {
         this.productsCount = cnt;
       });
 
     /* Get Selected Product Cnt */
-    this.productObsStore.getSelectedProductsCnt().subscribe(selectedCnt => {
-      console.log({ selectedCnt });
+    this.productStore.getSelectedProductsCnt().subscribe(selectedCnt => {
+      // console.log({ selectedCnt });
       this.selectedProductsCount = selectedCnt.length;
+    });
+
+    // TODO: Pattern 
+    /*  this.productStore.setPageSize({ size: 20, start: 0, end: 20 })
+       .subscribe(z => {
+         // console.log({ z });
+       }); */
+    this.productStore.setPageSize({ size: 20, start: 0, end: 20 });
+    this.productStore.productPagination$.subscribe(page => {
+      // console.log({ page });
+      this.productsPagination = page;
     });
   }
   saveSelectionsToCart(savedSelections: CartItem[]): void {
@@ -74,7 +87,7 @@ export class StoreComponent implements OnInit {
   }
   /* Track Selected Products */
   addToSelectedProducts(product: ProductItem) {
-    this.productObsStore.addToSelectedProducts(product);
+    this.productStore.addToSelectedProducts(product);
   }
 
   /* TODO: Create component to handle state; Set trigger for Style of Clicked Items */
@@ -85,7 +98,11 @@ export class StoreComponent implements OnInit {
   } */
 
   clearSelections() {
-    this.productObsStore.clearSelections();
-    this.productObsStore.getProducts();
+    this.productStore.clearSelections();
+    this.productStore.getProducts();
   }
+
+
+  /* Amazone
+   */
 }

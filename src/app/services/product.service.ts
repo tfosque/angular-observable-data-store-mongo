@@ -60,8 +60,8 @@ export class ProductService {
     }
     const results = store.filter(i => i.id !== item.id);
     this.setProduct(results);
-    console.log('product:service:', { item });
-    console.log('product:service:length:', results.length);
+    // console.log('product:service:', { item });
+    // console.log('product:service:length:', results.length);
   }
 
   setPageSize(size: number) {
@@ -74,7 +74,7 @@ export class ProductService {
 
     const currSelections = this.selectedProducts.value;
     const updatedSelections = [...currSelections, item];
-    console.log('product:service', { updatedSelections });
+    // console.log('product:service', { updatedSelections });
     // console.log({ currSelections });
     // console.log({ updatedSelections });
 

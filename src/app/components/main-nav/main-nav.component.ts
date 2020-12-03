@@ -21,7 +21,7 @@ export class MainNavComponent implements OnInit {
     /* Get CartCount */
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;
-      console.log({ count });
+      // console.log({ count });
     });
     /* Set Active Menu */
     this.menuService.activeMenuItem.subscribe(item => {

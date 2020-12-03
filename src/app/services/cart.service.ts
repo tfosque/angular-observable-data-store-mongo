@@ -36,20 +36,20 @@ export class CartService {
   }
 
   private setCart(items: CartItem[]): void {
-    console.log('setCart:', { items });
+    // console.log('setCart:', { items });
 
     this.cart.next(items);
     this.setCartCount(items);
   }
 
   setCartCount(cart: CartItem[]) {
-    console.log('setCartCount::::', { cart });
+    // console.log('setCartCount::::', { cart });
 
     this.cartCount.next(cart.length);
   }
   /* Save Cart Items after Checking for Dups */
   saveSelectionsToCart(cartItems: CartItem[]) {
-    console.log({ cartItems });
+    // console.log({ cartItems });
 
     /* Fetch Cart to later setCartCount */
     this.getCartItems();
@@ -71,7 +71,7 @@ export class CartService {
     /* Send Payload to Api */
     this.http.post('http://localhost:3000/api/carts', payload)
       .subscribe((response: any) => {
-        console.log({ response }, { payload });
+        // console.log({ response }, { payload });
         this.clearSelectedProducts();
         this.getCartItems();
         this.setCartCount(this.cart.value);
@@ -87,7 +87,7 @@ export class CartService {
     // TODO: Clear Mongo Collection???
     this.http.post('http://localhost:3000/api/carts/', [])
       .subscribe(response => {
-        console.log('cart:service:', { response });
+        // console.log('cart:service:', { response });
       });
     this.cart.next([]);
   }

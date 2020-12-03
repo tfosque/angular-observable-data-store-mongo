@@ -12,9 +12,12 @@
       <div class="col-8 text-left mt-2">
         Available Products&nbsp;<span class="text-primary">{{productsCount}}</span>
       </div>
+      <!-- TODO: Create cleaning button style logic -->
       <div class="col-4 nav-btns btn-group btn-group-sm text-right">
         <button class="btn btn-secondary" (click)="clearSelections()">Clear Selections</button>
-        <button class="btn btn-primary btn-sm" [ngClass]="{'disabled': selectedProductsCount <= 0}" (click)="selectedProductsCount > 0 
+        <button class="btn btn-sm"
+          [ngClass]="{'disabled': selectedProductsCount <= 0, 'btn-outline-primary': selectedProductsCount > 0}"
+          (click)="selectedProductsCount > 0 
           ? [saveSelectionsToCart(selectedProducts.value), sendNote({message: 'The selected products have been added to cart', show: true})]
           : null">
           Save Selected Items To Cart&nbsp;<span class="badge badge-warning">{{ selectedProductsCount }}</span>&nbsp;<i
@@ -24,7 +27,8 @@
     </div>
     <hr>
   </div>
-  <div class="col-2 mt-1 mb-1" *ngFor="let product of products | async">
+  <div class="col-2 mt-1 mb-1"
+    *ngFor="let product of products | async | slice:productsPagination.start:productsPagination.end">
     <div class="card mb-3 mt-3">
       <div class="card-body cart-item">
         <div class="card mb-2">

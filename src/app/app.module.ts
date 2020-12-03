@@ -1,3 +1,4 @@
+import { AmazonService } from './services/amazon.service';
 import { CartComponent } from './components/cart/cart.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -65,7 +66,7 @@ import { ToastComponent } from './components/shared/toast/toast.component';
   exports: [
     CommonModule
   ],
-  providers: [],
+  providers: [AmazonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,7 +13,7 @@ export class ProductStoreService {
   private selectedProductsCnt$ = new Subject<number>();
   private selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
   productPageSize$ = new BehaviorSubject<number>(100);
-  productPagination$ = new Subject<Pagination>();
+  productPagination$ = new BehaviorSubject<Pagination>({});
 
   constructor(
     private readonly http: HttpClient
@@ -51,8 +51,8 @@ export class ProductStoreService {
     }
     const results = store.filter(i => i.id !== item.id);
     this.setProduct(results);
-    console.log('product:service:', { item });
-    console.log('product:service:length:', results.length);
+    // console.log('product:service:', { item });
+    // console.log('product:service:length:', results.length);
   }
   //#endregion
 
@@ -73,11 +73,15 @@ export class ProductStoreService {
   getSelectedProductsCnt() {
     return this.selectedProducts$.asObservable();
   }
+
+  getProductPagination() {
+    return this.productPagination$.asObservable();
+  }
   addToSelectedProducts(selection: ProductItem) {
     const currSelections = this.selectedProducts$.value;
 
     this.selectedProducts$.next([...currSelections, selection]);
-    console.log('currSelections:', this.selectedProducts$.value);
+    // console.log('currSelections:', this.selectedProducts$.value);
 
     this.updateSelectedProductCnt(currSelections);
     // this.selectedProductsCnt$.next(currSelections.length);
@@ -102,9 +106,9 @@ export class ProductStoreService {
 
 
   /* Pagination */
-  setPageSize(pg: Pagination): void {
-    console.log(pg);
+  setPageSize(pg: Pagination): Observable<Pagination> {
+    // console.log(pg);
     this.productPagination$.next(pg);
-    // return this.productPagination$.asObservable();
+    return this.productPagination$.asObservable();
   }
 }

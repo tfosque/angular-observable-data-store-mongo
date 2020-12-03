@@ -28,7 +28,7 @@ export class ModalComponent implements OnInit, DoCheck {
     // this.productStore.setPageSize({ size: 50, start: 0, end: 50 });
     this.productStore.productPagination$.subscribe(page => {
       this.productPagination$.next(page);
-      console.log({ page });
+      // console.log({ page });
     });
     this.productStore.getProductCnt()
       .subscribe(cnt => {
@@ -37,7 +37,7 @@ export class ModalComponent implements OnInit, DoCheck {
 
     this.productStore.getSelectedProducts().subscribe(x => {
       this.selectedProducts$.next(x);
-      console.log({ x });
+      // console.log({ x });
     });
   }
 

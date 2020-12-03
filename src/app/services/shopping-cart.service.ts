@@ -41,7 +41,7 @@ export class ShoppingCartService {
     // console.log('setCart:cartItems', this.cartItems.value);
   }
   addCartItems(items: CartItem[]): void {
-    console.log({ items });
+    // console.log({ items });
 
     this.getCartItems();
     /* Check For Dups */
@@ -74,7 +74,7 @@ export class ShoppingCartService {
   clearCart(): void {
     this.http.post('http://localhost:3000/api/carts/', [])
       .subscribe(response => {
-        console.log('cart:service:', { response });
+        // console.log('cart:service:', { response });
       });
     this.cartItems.next([]);
     /* TODO: Clear MongodDB */
