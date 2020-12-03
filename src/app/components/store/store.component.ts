@@ -58,12 +58,10 @@ export class StoreComponent implements OnInit {
       this.selectedProductsCount = selectedCnt.length;
     });
   }
-  saveSelectionsToCart(sels: CartItem[]): void {
-    // console.log('sels:', { sels });
-    this.cartService.saveSelectionsToCart(sels);
-
-    /* reset all selected products styles */
-    // this.resetSelected$.next(true);
+  saveSelectionsToCart(savedSelections: CartItem[]): void {
+    // console.log({ savedSelections });
+    this.cartService.saveSelectionsToCart(savedSelections);
+    this.clearSelections();
   }
 
   /* TODO: Redo Notification Component and Service */

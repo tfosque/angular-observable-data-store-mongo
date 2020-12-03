@@ -1,6 +1,3 @@
-import { LogoutComponent } from './../../logout/logout.component';
-import { BehaviorSubject } from 'rxjs';
-import { ProductItem } from 'src/app/models/cart-item';
 import { ProductService } from './../../../services/product.service';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -21,6 +18,9 @@ export class ThumbsComponent implements OnInit {
   ngOnInit(): void { }
 
   toggleSelected() {
+    if (this.selected) {
+      //
+    }
     this.selected = !this.selected;
   }
 
