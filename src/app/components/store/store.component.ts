@@ -53,7 +53,7 @@ export class StoreComponent implements OnInit {
     this.productStore.getSelectedProducts()
       .subscribe(updateSelections => {
         this.selectedProducts.next(updateSelections);
-        console.log({ updateSelections });
+        // console.log({ updateSelections });
       });
 
     /* Get Product Cnt */
@@ -102,7 +102,7 @@ export class StoreComponent implements OnInit {
 
     /* Filter Check for duplication before adding */
     const answer = find(cc, ['name', product.name]);
-    console.log(({ answer }));
+    // console.log(({ answer }));
 
     /* Add to selected products  */
     if (answer === undefined) {

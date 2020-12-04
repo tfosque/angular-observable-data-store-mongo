@@ -33,7 +33,7 @@ export class ProductStoreService {
       .subscribe((data: ProductItem[]) => {
         this.products$.next(data);
         this.updateProductCnt(data);
-        console.log('fetching products......');
+        // console.log('fetching products......');
       });
     return this.products$.asObservable();
   }

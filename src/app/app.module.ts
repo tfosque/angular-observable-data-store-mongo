@@ -30,6 +30,7 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { StoreComponent } from './components/store/store.component';
 import { ToastComponent } from './components/shared/toast/toast.component';
+import { ProductDisplayComponent } from './components/product-display/product-display.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ToastComponent } from './components/shared/toast/toast.component';
     OrderSummaryComponent,
     CheckoutComponent,
     StoreComponent,
-    ToastComponent
+    ToastComponent,
+    ProductDisplayComponent
   ],
   imports: [
     BrowserModule,
