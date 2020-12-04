@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
     this.menuService.setActiveMenu('Shopping Cart');
 
     /* Get cartitems - only grab cartItems if cart is empty */
-    this.cartService.getCartItems();
+    this.cartService.fetchCartItems();
     this.cartService.cart$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
     });

@@ -79,7 +79,7 @@ export class ModalComponent implements OnInit, DoCheck {
   }
 
   addSelected(item: ProductItem) {
-    console.log({ item });
+    // console.log({ item });
     this.productStore.addToSelectedProducts(item);
   }
 

@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item';
 // import { fromFetch } from 'rxjs/fetch';
 // mport { switchMap, catchError } from 'rxjs/operators';
+import { uniqBy } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class CartService {
   ) { }
 
   // Get last value without subscribing to the cart$ observable (synchronously).
-  getCartItems(): CartItem[] {
+  fetchCartItems(): CartItem[] {
     this.http.get('http://localhost:3000/api/carts')
       .subscribe((nextCart: CartItem[]) => {
         this.setCart(nextCart);
@@ -35,31 +36,28 @@ export class CartService {
     // return this.cart.getValue();
   }
 
-  private setCart(items: CartItem[]): void {
-    // console.log('setCart:', { items });
+  getCartItems() {
+    return this.cart$
+  }
 
+
+  private setCart(items: CartItem[]): void {
     this.cart.next(items);
     this.setCartCount(items);
   }
 
   setCartCount(cart: CartItem[]) {
-    // console.log('setCartCount::::', { cart });
-
     this.cartCount.next(cart.length);
   }
-  /* Save Cart Items after Checking for Dups */
-  saveSelectionsToCart(cartItems: CartItem[]) {
-    // console.log({ cartItems });
 
-    /* Fetch Cart to later setCartCount */
-    this.getCartItems();
-    /* TODO: Check For Dups */
-    // let newItems: CartItem[] = [];
+  saveSelectionsToCart(selections: CartItem[]) {
+    /* Save Cart Items after Checking for Dups */
+    const newCart = [...this.cart.value, ...selections];
 
     /* Format payload */
     const payload: CartItem[] = [];
     /* Post */
-    cartItems.map((item: CartItem) => {
+    selections.map((item: CartItem) => {
       payload.push({
         name: item.name,
         price: item.price,
@@ -71,14 +69,44 @@ export class CartService {
     /* Send Payload to Api */
     this.http.post('http://localhost:3000/api/carts', payload)
       .subscribe((response: any) => {
-        // console.log({ response }, { payload });
         this.clearSelectedProducts();
-        this.getCartItems();
+        this.setCart(newCart);
         this.setCartCount(this.cart.value);
       });
-
     return;
   }
+
+  checkIfCartItemExists(name: string) {
+    this.cart.value.filter(cartItem => {
+      if (cartItem.name === name) {
+        console.log({ name })
+      }
+    });
+    // Mockingbird, galapagos
+  }
+
+  findUniq(items: CartItem[]) {
+    // const data = this.cart.value.concat(items);
+    // console.log({ cartItems }, { items });
+    // console.log('uniqBy', uniqBy(data, 'name'));
+    // return uniqBy(data, 'name');
+
+    return items.filter(i => {
+      return this.cart.value.map(ci => {
+        /* save to db if names don't match */
+        if (i.name === ci.name) {
+          // dont return item
+          // console.log('found:', i.name, '-match-', ci.name);
+          // return m;
+        } else {
+          // return item
+          console.log([...this.cart.value, ci]);
+          return [...this.cart.value, ci];
+        }
+      });
+    });
+  }
+
   clearSelectedProducts() {
     this.productStore.clearSelections();
   }
@@ -87,6 +115,7 @@ export class CartService {
     // TODO: Clear Mongo Collection???
     this.http.post('http://localhost:3000/api/carts/', [])
       .subscribe(response => {
+        console.log('post cart items......');
         // console.log('cart:service:', { response });
       });
     this.cart.next([]);

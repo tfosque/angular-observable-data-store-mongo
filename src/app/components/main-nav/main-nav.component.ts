@@ -17,7 +17,7 @@ export class MainNavComponent implements OnInit {
 
   ngOnInit(): void {
     /* Get Cart Items */
-    this.cartService.getCartItems();
+    this.cartService.fetchCartItems();
     /* Get CartCount */
     this.cartService.cartCount$.subscribe(count => {
       this.cartCount = count;

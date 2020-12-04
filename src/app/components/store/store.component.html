@@ -20,8 +20,8 @@
           (click)="selectedProductsCount > 0 
           ? [saveSelectionsToCart(selectedProducts.value), sendNote({message: 'The selected products have been added to cart', show: true})]
           : null">
-          Save Selected Items To Cart&nbsp;<span class="badge badge-warning">{{ selectedProductsCount }}</span>&nbsp;<i
-            class="fa fa-save"></i>
+          Save To Cart&nbsp;<span class="badge badge-warning">{{ selectedProductsCount }}</span>&nbsp;
+          &nbsp;<i class="fa fa-save fa-lg"></i>
         </button>
       </div>
     </div>

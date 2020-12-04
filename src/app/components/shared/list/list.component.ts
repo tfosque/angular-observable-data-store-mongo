@@ -18,7 +18,6 @@ export class ListComponent implements OnInit {
 
   constructor(
     private readonly cartService: CartService,
-    private readonly cartSvc: ShoppingCartService
   ) { }
 
   ngOnInit(): void {

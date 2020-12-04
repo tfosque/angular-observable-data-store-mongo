@@ -5,9 +5,10 @@ import { CartService } from './../../services/cart.service';
 import { MenuService } from './../../services/menu.service';
 import { ProductItem } from 'src/app/models/cart-item';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscriber } from 'rxjs';
 import { Notification } from './../../models/notification';
 import { Pagination } from 'src/app/models/pagination';
+import { uniqBy, find } from 'lodash';
 
 @Component({
   selector: 'app-store',
@@ -22,6 +23,8 @@ export class StoreComponent implements OnInit {
   clicked = false;
   note = {};
   productsPagination: Pagination = {};
+
+  currCart = new BehaviorSubject<CartItem[]>([]);
   // resetSelected$ = new BehaviorSubject<boolean>(false);
   constructor(
     // private readonly productService: ProductService,
@@ -35,6 +38,11 @@ export class StoreComponent implements OnInit {
     /* Set active menu item */
     this.menuService.setActiveMenu('Store');
 
+    /* Track CartItems */
+    this.cartService.getCartItems().subscribe(cart => {
+      this.currCart.next(cart);
+    });
+
     /* Get Products - productStore Service */
     this.productStore.getProducts()
       .subscribe((products: ProductItem[]) => {
@@ -45,7 +53,7 @@ export class StoreComponent implements OnInit {
     this.productStore.getSelectedProducts()
       .subscribe(updateSelections => {
         this.selectedProducts.next(updateSelections);
-        // console.log({ updateSelections });
+        console.log({ updateSelections });
       });
 
     /* Get Product Cnt */
@@ -60,11 +68,12 @@ export class StoreComponent implements OnInit {
       this.selectedProductsCount = selectedCnt.length;
     });
 
-    // TODO: Pattern 
+    // TODO: Pattern
     /*  this.productStore.setPageSize({ size: 20, start: 0, end: 20 })
        .subscribe(z => {
          // console.log({ z });
        }); */
+
     this.productStore.setPageSize({ size: 20, start: 0, end: 20 });
     this.productStore.productPagination$.subscribe(page => {
       // console.log({ page });
@@ -79,30 +88,36 @@ export class StoreComponent implements OnInit {
 
   /* TODO: Redo Notification Component and Service */
   sendNote(note: Notification) {
-    console.log('store:sendNote', { note });
+    // console.log('store:sendNote', { note });
     this.noteService.sendNotification(note);
     setTimeout(() => {
       this.noteService.sendNotification({ message: '', show: false });
     }, 3000);
   }
+
   /* Track Selected Products */
   addToSelectedProducts(product: ProductItem) {
-    this.productStore.addToSelectedProducts(product);
+    // get cart items
+    const cc = this.currCart.value;
+
+    /* Filter Check for duplication before adding */
+    const answer = find(cc, ['name', product.name]);
+    console.log(({ answer }));
+
+    /* Add to selected products  */
+    if (answer === undefined) {
+      this.productStore.addToSelectedProducts(product);
+    }
   }
 
   /* TODO: Create component to handle state; Set trigger for Style of Clicked Items */
   setClicked(isClicked: boolean) { }
-
-  /* resetSelected() {
-    this.resetSelected$ = true;
-  } */
 
   clearSelections() {
     this.productStore.clearSelections();
     this.productStore.getProducts();
   }
 
-
-  /* Amazone
+  /* Amazon
    */
 }
