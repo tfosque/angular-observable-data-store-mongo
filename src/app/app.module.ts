@@ -1,11 +1,13 @@
-import { AmazonService } from './services/amazon.service';
-import { CartComponent } from './components/cart/cart.component';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AmazonService } from './services/amazon.service';
+import { CartComponent } from './components/cart/cart.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
@@ -30,7 +32,8 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { StoreComponent } from './components/store/store.component';
 import { ToastComponent } from './components/shared/toast/toast.component';
-import { ProductDisplayComponent } from './components/product-display/product-display.component';
+import { ProductDisplayComponent } from './components/products/product-display/product-display.component';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,8 @@ import { ProductDisplayComponent } from './components/product-display/product-di
     CheckoutComponent,
     StoreComponent,
     ToastComponent,
-    ProductDisplayComponent
+    ProductDisplayComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,8 @@ import { ProductDisplayComponent } from './components/product-display/product-di
     AppRoutingModule,
     NgbModule,
     AccordionModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [
     CommonModule

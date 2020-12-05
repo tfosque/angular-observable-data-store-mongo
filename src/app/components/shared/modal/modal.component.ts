@@ -3,7 +3,7 @@ import { Pagination } from './../../../models/pagination';
 import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CartItem, ProductItem } from 'src/app/models/cart-item';
+import { Product } from 'src/app/models/cart-item';
 
 @Component({
   selector: 'app-modal',
@@ -12,10 +12,10 @@ import { CartItem, ProductItem } from 'src/app/models/cart-item';
 })
 export class ModalComponent implements OnInit, DoCheck {
   // TODO: Change Detection Remove
-  @Input() products = new BehaviorSubject<ProductItem[]>([]);
-  @Input() cart$ = new BehaviorSubject<CartItem[]>([]);
-  selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
-  cart = new BehaviorSubject<ProductItem[]>([]);
+  @Input() products = new BehaviorSubject<Product[]>([]);
+  @Input() cart$ = new BehaviorSubject<Product[]>([]);
+  selectedProducts$ = new BehaviorSubject<Product[]>([]);
+  cart = new BehaviorSubject<Product[]>([]);
   productPagination$ = new BehaviorSubject<Pagination>({});
   productCount = 0;
 
@@ -46,7 +46,7 @@ export class ModalComponent implements OnInit, DoCheck {
   }
 
   getProducts() { }
-  removeCartItems(products: ProductItem[], cart: any): ProductItem[] {
+  removeCartItems(products: Product[], cart: any): Product[] {
     // console.log({ products }, { innerCart });
     /* Cart Item Ids */
     const cids = cart.value.map(item => {
@@ -78,7 +78,7 @@ export class ModalComponent implements OnInit, DoCheck {
     // console.log({ page });
   }
 
-  addSelected(item: ProductItem) {
+  addSelected(item: Product) {
     // console.log({ item });
     this.productStore.addToSelectedProducts(item);
   }

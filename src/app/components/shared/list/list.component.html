@@ -1,8 +1,8 @@
 <div class="list-group-item" *ngFor="let item of items">
   <div class="row">
-    <div class="col-5">
-      {{ item.name }}
-      <div style="display: none;" class="hidden text-secondary">{{ item.id }}</div>
+    <div (click)="goToPDP(item)" class="col-5" style="cursor: pointer">
+      <div>{{ item.name }}</div>
+      <div class="text-secondary">{{ item.productdId }}</div>
     </div>
     <div class="col-2">{{ item.price | currency}}</div>
     <div class="col-1">{{ item.quantity || item.qty }}</div>

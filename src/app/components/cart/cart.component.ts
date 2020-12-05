@@ -1,7 +1,7 @@
 import { Pagination } from './../../models/pagination';
 import { MenuService } from './../../services/menu.service';
 import { ProductStoreService } from './../../services/product-store.service';
-import { CartItem, ProductItem } from './../../models/cart-item';
+import { Product } from './../../models/cart-item';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,9 +13,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  cartItems$ = new BehaviorSubject<CartItem[]>([]);
-  productItems$ = new BehaviorSubject<ProductItem[]>([]);
-  products = new Subject<ProductItem[]>();
+  cartItems$ = new BehaviorSubject<Product[]>([]);
+  productItems$ = new BehaviorSubject<Product[]>([]);
+  products = new Subject<Product[]>();
   // selectedProducts$ = new BehaviorSubject<ProductItem[]>([]);
 
   /* pagingation */
@@ -37,6 +37,8 @@ export class CartComponent implements OnInit {
     this.cartService.fetchCartItems();
     this.cartService.cart$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
+      console.log({ nextItems });
+
     });
 
     /* Watch PageSize for pagination */

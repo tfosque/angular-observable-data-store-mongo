@@ -32,7 +32,7 @@
     <div class="card mb-3 mt-3">
       <div class="card-body cart-item">
         <div class="card mb-2">
-          <app-thumbs (click)="addToSelectedProducts(product)" [imgUrl]="product.imgUrl" [label]="product.name">
+          <app-thumbs (click)="goToPDP(product)" [imgUrl]="product.images.url" [label]="product.name">
           </app-thumbs>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { ProductDisplayComponent } from './components/product-display/product-display.component';
+import { ProductDisplayComponent } from './components/products/product-display/product-display.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -11,12 +11,13 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: 'products', component: StoreComponent },
+  { path: 'products/details/:productId', component: ProductDisplayComponent },
   { path: 'shopping-cart', component: CartComponent },
+  { path: 'shopping-cart/details/:id', component: ProductDisplayComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'landing-page', component: LandingPageComponent },
   { path: 'templates', component: TemplatesComponent },
-  { path: 'templates-details/:id', component: TemplatesComponent },
-  { path: 'product-details/:id', component: ProductDisplayComponent }
+  { path: 'templates-details/:id', component: TemplatesComponent }
 ];
 
 @NgModule({

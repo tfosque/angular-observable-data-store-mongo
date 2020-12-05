@@ -1,14 +1,14 @@
-import { CartItem } from './../../models/cart-item';
 import { ProductStoreService } from './../../services/product-store.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { CartService } from './../../services/cart.service';
 import { MenuService } from './../../services/menu.service';
-import { ProductItem } from 'src/app/models/cart-item';
+import { Product } from 'src/app/models/cart-item';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, Subscriber } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Notification } from './../../models/notification';
 import { Pagination } from 'src/app/models/pagination';
-import { uniqBy, find } from 'lodash';
+import { find } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-store',
@@ -16,22 +16,23 @@ import { uniqBy, find } from 'lodash';
   styleUrls: ['./store.component.scss']
 })
 export class StoreComponent implements OnInit {
-  products = new Subject<ProductItem[]>();
+  products = new Subject<Product[]>();
   productsCount = 0;
   selectedProductsCount = 0;
-  selectedProducts = new BehaviorSubject<ProductItem[]>([]);
+  selectedProducts = new BehaviorSubject<Product[]>([]);
   clicked = false;
   note = {};
   productsPagination: Pagination = {};
 
-  currCart = new BehaviorSubject<CartItem[]>([]);
+  currCart = new BehaviorSubject<Product[]>([]);
   // resetSelected$ = new BehaviorSubject<boolean>(false);
   constructor(
     // private readonly productService: ProductService,
     private readonly menuService: MenuService,
     private readonly cartService: CartService,
     private readonly noteService: NotificationService,
-    private readonly productStore: ProductStoreService
+    private readonly productStore: ProductStoreService,
+    private readonly route: Router
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +46,7 @@ export class StoreComponent implements OnInit {
 
     /* Get Products - productStore Service */
     this.productStore.getProducts()
-      .subscribe((products: ProductItem[]) => {
+      .subscribe((products: Product[]) => {
         this.products.next(products);
       });
 
@@ -79,8 +80,11 @@ export class StoreComponent implements OnInit {
       // console.log({ page });
       this.productsPagination = page;
     });
+
+    console.log(this.currCart);
+
   }
-  saveSelectionsToCart(savedSelections: CartItem[]): void {
+  saveSelectionsToCart(savedSelections: Product[]): void {
     // console.log({ savedSelections });
     this.cartService.saveSelectionsToCart(savedSelections);
     this.clearSelections();
@@ -96,7 +100,7 @@ export class StoreComponent implements OnInit {
   }
 
   /* Track Selected Products */
-  addToSelectedProducts(product: ProductItem) {
+  addToSelectedProducts(product: Product) {
     // get cart items
     const cc = this.currCart.value;
 
@@ -118,6 +122,8 @@ export class StoreComponent implements OnInit {
     this.productStore.getProducts();
   }
 
-  /* Amazon
-   */
+  goToPDP(product: Product) {
+    this.productStore.setProductPage(product);
+    this.route.navigate(['/products/details', product.productId]);
+  }
 }

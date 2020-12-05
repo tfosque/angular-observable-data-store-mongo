@@ -1,7 +1,8 @@
-import { ShoppingCartService } from './../../../services/shopping-cart.service';
+import { Router } from '@angular/router';
+import { ProductStoreService } from './../../../services/product-store.service';
 import { CartService } from './../../../services/cart.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { CartItem } from 'src/app/models/cart-item';
+import { Product } from 'src/app/models/cart-item';
 
 // TODO: Rename this component to cartList/ cartListItem
 
@@ -18,6 +19,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private readonly cartService: CartService,
+    private readonly productService: ProductStoreService,
+    private readonly route: Router
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +30,13 @@ export class ListComponent implements OnInit {
     this.cartService.clearCart();
   }
 
-  deleteItem(item: CartItem) {
+  goToPDP(product: Product) {
+    console.log({ product });
+    this.productService.setProductPage(product);
+    this.route.navigate(['products/details', product.productId]);
+  }
+
+  deleteItem(item: Product) {
     this.cartService.removeCartItem(item);
   }
 
