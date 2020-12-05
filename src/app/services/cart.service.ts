@@ -93,7 +93,8 @@ export class CartService {
 
   clearCart(): void {
     // TODO: Clear Mongo Collection???
-    this.http.delete('http://localhost:3000/api/carts?filter[where][productId][neq]=""')
+    // DELETE /modelName?filter=[filterType1]=val1&filter[filterType2]=val2...
+    this.http.delete('http://localhost:3000/api/carts?filter[where][id][neq]=xyz')
       .subscribe(response => {
         console.log('deleting cart items......');
       });

@@ -27,15 +27,13 @@ export class ProductDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     // this.productStore.setProductPage(this.product);
-
-    console.log('productDisplay:', this.productDisplay.value);
-
+    // console.log('productDisplay:', this.productDisplay.value);
     this.route.params.subscribe(params => {
       this.productStore.getProduct(params.productId);
     });
     this.productStore.productPage$.subscribe(np => {
       this.form.quantity = np.quantity;
-      console.log(this.form);
+      // console.log(this.form);
       this.productDisplay.next(np);
     });
   }

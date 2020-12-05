@@ -35,7 +35,7 @@ export class ProductStoreService {
       .subscribe((data: Product[]) => {
         this.products$.next(data);
         this.updateProductCnt(data);
-        console.log('fetching products......', data);
+        // console.log('fetching products......', data);
       });
     return this.products$.asObservable();
   }
@@ -45,7 +45,7 @@ export class ProductStoreService {
     this.http.get(`http://localhost:3000/api/productsDBs/findOne?filter[where][productId]=${productId}`)
       .subscribe((data: Product) => {
         this.productPage$.next(data);
-        console.log('fetching a product......', { data });
+        // console.log('fetching a product......', { data });
       });
     return this.productPage$.asObservable();
   }

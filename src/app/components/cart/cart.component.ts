@@ -37,7 +37,7 @@ export class CartComponent implements OnInit {
     this.cartService.fetchCartItems();
     this.cartService.cart$.subscribe(nextItems => {
       this.cartItems$.next(nextItems);
-      console.log({ nextItems });
+      // console.log({ nextItems });
 
     });
 
