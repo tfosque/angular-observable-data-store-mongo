@@ -72,7 +72,7 @@ export class StoreComponent implements OnInit {
     });
 
 
-    // TODO: Pattern
+    // TODO Pattern
     /*  this.productStore.setPageSize({ size: 20, start: 0, end: 20 })
        .subscribe(z => {
          // console.log({ z });
@@ -90,7 +90,7 @@ export class StoreComponent implements OnInit {
     this.clearSelections();
   }
 
-  /* TODO: Redo Notification Component and Service */
+  /* TODO Redo Notification Component and Service */
   sendNote(note: Notification) {
     // console.log('store:sendNote', { note });
     this.noteService.sendNotification(note);
@@ -114,7 +114,7 @@ export class StoreComponent implements OnInit {
     }
   }
 
-  /* TODO: Create component to handle state; Set trigger for Style of Clicked Items */
+  /* TODO Create component to handle state; Set trigger for Style of Clicked Items */
   setClicked(isClicked: boolean) { }
 
   clearSelections() {

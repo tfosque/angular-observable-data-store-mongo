@@ -11,7 +11,7 @@ import { Product } from 'src/app/models/cart-item';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit, DoCheck {
-  // TODO: Change Detection Remove
+  // TODO Change Detection Remove
   @Input() products = new BehaviorSubject<Product[]>([]);
   @Input() cart$ = new BehaviorSubject<Product[]>([]);
   selectedProducts$ = new BehaviorSubject<Product[]>([]);

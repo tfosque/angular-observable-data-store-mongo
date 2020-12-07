@@ -51,10 +51,13 @@ export class ProductDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.productPageService.checkCart(this.productId);
-    this.productPageService.productPage.subscribe(sub => {
-      this.productDisplay.next(sub);
-      this.form.quantity = sub.quantity;
-      if (sub !== undefined && !isEmpty(sub.cartId)) {
+    this.productPageService.productPage.subscribe(fromWhatDb => {
+      this.productDisplay.next(fromWhatDb);
+      /* TODO If not product is return then product is in productsDB */
+      if (!isEmpty(fromWhatDb)) {
+        this.form.quantity = fromWhatDb.quantity;
+      }
+      if (fromWhatDb !== undefined && !isEmpty(fromWhatDb.cartId)) {
         this.hasCartId = true;
       }
     });
@@ -64,13 +67,11 @@ export class ProductDisplayComponent implements OnInit {
     this.cartService.saveSelectionsToCart(item);
   }
 
-  updateCart(item: Product) {
-    console.log('what is newItem:', { item });
-
+  updateCart() {
     this.savingDocument = true;
-    // TODO: item is not being used
     const item2Update: Product = { ...this.productDisplay.value, quantity: this.form.quantity };
     this.cartService.updateCart(item2Update);
+    /* Need time to save results before displaying in cart */
     setTimeout(() => {
       this.savingDocument = false;
       this.router.navigate(['shopping-cart']);

@@ -120,7 +120,7 @@ export class CartService {
   }
 
   clearCart(): void {
-    // TODO: Clear Mongo Collection???
+    // TODO Clear Mongo Collection???
     // DELETE /modelName?filter=[filterType1]=val1&filter[filterType2]=val2...
     this.http.delete('http://localhost:3000/api/carts?filter[where][id]=xyz')
       .subscribe(response => {

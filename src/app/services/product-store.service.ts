@@ -22,7 +22,7 @@ export class ProductStoreService {
   constructor(
     private readonly http: HttpClient
   ) {
-    // TODO: Research Best Practices this on fires once per session
+    // TODO Research Best Practices this on fires once per session
     /* this.http.get('http://localhost:3000/api/productsDBs')
       .subscribe((data: Product[]) => {
         this.products$.next(data);

@@ -18,11 +18,9 @@
               <div class="col-3 mr-1" *ngFor="let thumb of ['#e8e8e8', '#d4d4d4', 'yellow']"
                 style="cursor: pointer; width: 4px; height: 72px;" [ngStyle]="{'background': thumb}"></div>
             </div>
+            <!--  <div>cartId: {{ productDisplay.value.cartId }}</div> -->
           </div>
-
         </div>
-        <!--  <div>cartId: {{ productDisplay.value.cartId }}</div> -->
-
       </div>
       <div class="col-sm-12 col-lg-8 pdp-item">
         <div>{{productDisplay.value.name}}</div>
@@ -56,7 +54,7 @@
         <div class="btn-group btn-group-sm">
           <button type="submit" [ngClass]="{'hidden': hasCartId}" class="btn btn-primary btn-sm">Add To Cart <i
               class="fa fa-shopping-cart fa-lg"></i></button>
-          <button (click)="updateCart(productDisplay.value)" type="button" [ngClass]="{'hidden': !hasCartId}"
+          <button (click)="updateCart()" type="button" [ngClass]="{'hidden': !hasCartId}"
             class="btn btn-primary btn-sm">
             Update Item
             &nbsp;<i class="fa fa-save fa-lg"></i></button>

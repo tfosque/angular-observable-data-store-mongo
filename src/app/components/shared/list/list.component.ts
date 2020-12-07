@@ -5,7 +5,7 @@ import { CartService } from './../../../services/cart.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/cart-item';
 
-// TODO: Rename this component to cartList/ cartListItem
+// TODO Rename this component to cartList/ cartListItem
 
 @Component({
   selector: 'app-list',
@@ -14,7 +14,7 @@ import { Product } from 'src/app/models/cart-item';
 })
 
 
-// TODO: Remove onChangePush Detection
+// TODO Remove onChangePush Detection
 export class ListComponent implements OnInit {
   @Input() items: any[] = [];
 

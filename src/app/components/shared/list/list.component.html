@@ -1,13 +1,17 @@
 <div class="list-group-item" *ngFor="let item of items">
   <div class="row">
-    <div class="col-5" style="cursor: pointer">
+    <div class="col-1">
+      <img class="rounded" height="49" width="53" [src]="item.images.thumb" alt="">
+    </div>
+    <div class="col-6" style="cursor: pointer">
       <div><a (click)="goToPDP($event, item)" href="#">{{ item.name }}</a></div>
-      <div class="text-secondary">{{ item.productdId }} id: {{ item.id }}</div>
-      <div class="text-secondary">cartId: {{ item.cartId }}</div>
+      <!-- <div class="text-secondary">{{ item.productdId }} id: {{ item.id }}</div> -->
+      <!-- <div class="text-secondary">cartId: {{ item.cartId }}</div> -->
     </div>
     <div class="col-2">{{ item.price | currency}}</div>
     <div class="col-1">{{ item.quantity || item.qty }}</div>
-    <a class="offset-3 col-1 text-center">
+    <div class="col-1">{{ item.price * item.quantity | currency }}</div>
+    <a class="col-1 text-center">
       <span (click)="deleteItem(item)" style="cursor: pointer">
         <i class="fa fa-trash text-secondary"></i>
       </span>
