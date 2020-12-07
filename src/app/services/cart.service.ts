@@ -64,16 +64,12 @@ export class CartService {
   }
 
   updateCart(item: Product) {
-    // console.log({ 'quantity': item.quantity }); // good
-    // console.log('id:', item.id); // wrong needs to be cartID
-
     const payload = { 'quantity': item.quantity };
     console.log({ payload });
 
     this.cartItemExist(item);
     this.http.patch(`http://localhost:3000/api/carts/${item.id}`, payload).subscribe(res => {
-      console.log({ res });
-      this.getCartItems();
+      this.getCartItems()
       console.log(this.cart.value);
     });
   }

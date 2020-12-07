@@ -30,6 +30,7 @@ export class ProductDisplayComponent implements OnInit {
   browserRefresh = false;
   navigated = 0;
   form: any = {};
+  savingDocument = false;
 
   constructor(
     private readonly cartService: CartService,
@@ -48,7 +49,7 @@ export class ProductDisplayComponent implements OnInit {
   ngOnInit() {
     this.productPageService.checkCart(this.productId);
     this.productPageService.productPage.subscribe(sub => {
-      console.log({ sub })
+      console.log({ sub });
       this.productDisplay.next(sub);
       this.form.quantity = sub.quantity;
       if (!isEmpty(sub.cartId)) {
@@ -62,11 +63,14 @@ export class ProductDisplayComponent implements OnInit {
   }
 
   updateCart(item: Product) {
+    this.savingDocument = true;
+    // TODO: item is not being used
     const item2Update: Product = { ...this.productDisplay.value, quantity: this.form.quantity };
-    console.log({ item });
-    console.log({ item2Update });
-
     this.cartService.updateCart(item2Update);
+    setTimeout(() => {
+      this.savingDocument = false;
+      this.router.navigate(['shopping-cart']);
+    }, 1000);
   }
 
   submitPDPQauntity(form: NgForm) {
