@@ -55,14 +55,12 @@ export class ProductPageService {
   checkProducts(empty: boolean, productId: string) {
     console.log('second empty', { empty });
 
-    if (empty) {
-      /* XHR request */
-      this.http.get('http://localhost:3000/api/productsDBs').subscribe(productData => {
-        const productP = find(productData, ['productId', productId]);
-        console.log({ productP }, 'fetchProducts.....');
-        this.productPage.next(productP);
-      });
-    }
+    /* XHR request */
+    this.http.get('http://localhost:3000/api/productsDBs').subscribe(productData => {
+      const productP = find(productData, ['productId', productId]);
+      console.log({ productP }, 'fetchProducts.....');
+      this.productPage.next(productP);
+    });
   }
 
   checkCart(productId: string): Observable<any> {

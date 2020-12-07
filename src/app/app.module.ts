@@ -33,6 +33,8 @@ import { ProductDisplayComponent } from './components/products/product-display/p
 import { ProductsComponent } from './components/products/products.component';
 import { BrandsComponent } from './components/brands/brands.component';
 import { ProductOptionsComponent } from './components/products/product-options/product-options.component';
+import { ProductThumbsComponent } from './components/products/product-thumbs/product-thumbs.component';
+import { SlideBarComponent } from './components/shared/slide-bar/slide-bar.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { ProductOptionsComponent } from './components/products/product-options/p
     ProductDisplayComponent,
     ProductsComponent,
     BrandsComponent,
-    ProductOptionsComponent
+    ProductOptionsComponent,
+    ProductThumbsComponent,
+    SlideBarComponent
   ],
   imports: [
     BrowserModule,

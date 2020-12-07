@@ -1,7 +1,7 @@
 <div class="list-group-item" *ngFor="let item of items">
   <div class="row">
     <div class="col-5" style="cursor: pointer">
-      <div (click)="goToPDP(item)">{{ item.name }}</div>
+      <div><a (click)="goToPDP($event, item)" href="#">{{ item.name }}</a></div>
       <div class="text-secondary">{{ item.productdId }} id: {{ item.id }}</div>
       <div class="text-secondary">cartId: {{ item.cartId }}</div>
     </div>

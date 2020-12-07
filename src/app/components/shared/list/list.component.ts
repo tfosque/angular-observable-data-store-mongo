@@ -31,7 +31,8 @@ export class ListComponent implements OnInit {
     this.cartService.clearCart();
   }
 
-  goToPDP(product: Product) {
+  goToPDP(evt, product: Product) {
+    evt.preventDefault();
     // console.log({ product });
     this.productPageService.setProductPage(product);
     // this.productService.setProductPage(product);

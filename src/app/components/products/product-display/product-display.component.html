@@ -5,57 +5,67 @@
 </div>
 
 <ng-template #pdp>
-  <form *ngIf="(productDisplay | async)?.images" class="col mt-3" #pdfForm="ngForm"
+  <form *ngIf="(productDisplay | async)?.images" class="container mt-3" #pdfForm="ngForm"
     (ngSubmit)="submitPDPQauntity(pdfForm)">
-    <div class="container">
+    <div class="row mt-5">
 
-      <div class="row mt-5">
-        <div class="col-sm-12 col-lg-4">
-          <img class="rounded" width="300" height="300" [src]="productDisplay.value.images.thumb" alt="">
-          <div><small>{{productDisplay.value.productId}}</small></div>
-          <!--  <div>cartId: {{ productDisplay.value.cartId }}</div> -->
-        </div>
-        <div class="col-sm-12 col-lg-8 pdp-item">
-          <div>{{productDisplay.value.name}}</div>
-          <div>#{{productDisplay.value.sku}} | <small class="text-secondary">{{productDisplay.value.id}}</small>
-          </div>
-
-          <section class="row" [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">
-            <div class="col-12">color options: </div>
-            <div class="col-1 mr-1 ml-1 mt-2" *ngFor="let color of productDisplay.value.colors"
-              style="width: 200px; height: 75px;" [ngStyle]="{'background': color.hue}"></div>
-          </section>
-
-          <div [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">tile of thumbs</div>
-
-          <section class="row">
-            <div class="col" [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">color:
+      <div class="col-sm-12 col-lg-4">
+        <img class="rounded" width="300" height="300" [src]="productDisplay.value.images.thumb" alt="">
+        <div class="row">
+          <div class="col-12 mt-1">
+            <div>{{productDisplay.value.productId}}</div>
+            <div class="col row mt-2">
+              <div class="col-3 mr-1" *ngFor="let thumb of ['#e8e8e8', '#d4d4d4', 'yellow']"
+                style="cursor: pointer; width: 4px; height: 72px;" [ngStyle]="{'background': thumb}"></div>
             </div>
-            <div class="col" [ngStyle]="{'color': productDisplay.value.size !== 'none' ? '' : '#9e9c9c8c'}">size:
-              {{productDisplay.value.size}}</div>
-          </section>
-
-          <section class="row mt-4">
-            <div class="col">
-              qty:
-              <input name="quantity" style="width: 50px; text-align: center;" type="number" value="{{ form.quantity }}"
-                [(ngModel)]="form.quantity" required />
-            </div>
-            <div class="col">Purchasing Unit: {{productDisplay.value.unit}}</div>
-          </section>
-
-          <div class="btn-group btn-group-sm">
-            <button type="submit" [ngClass]="{'hidden': hasCartId}" class="btn btn-primary btn-sm">Add To Cart <i
-                class="fa fa-shopping-cart fa-lg"></i></button>
-            <button (click)="updateCart(productDisplay.value)" type="button" [ngClass]="{'hidden': !hasCartId}"
-              class="btn btn-primary btn-sm">
-              Update Item
-              &nbsp;<i class="fa fa-save fa-lg"></i></button>
-            <button type="button" class="btn btn-outline-secondary btn-sm">Add To Template</button>
           </div>
 
         </div>
+        <!--  <div>cartId: {{ productDisplay.value.cartId }}</div> -->
+
       </div>
+      <div class="col-sm-12 col-lg-8 pdp-item">
+        <div>{{productDisplay.value.name}}</div>
+        <div>#{{productDisplay.value.sku}} | <small class="text-secondary">{{productDisplay.value.id}}</small>
+        </div>
+
+        <section class="row" [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">
+          <div class="col-12">color options: </div>
+          <div class="col-1 mr-1 ml-1 mt-2" *ngFor="let color of productDisplay.value.colors"
+            style="width: 200px; height: 75px;" [ngStyle]="{'background': color.hue}"></div>
+        </section>
+
+        <div [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">tile of thumbs</div>
+
+        <section class="row">
+          <div class="col" [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">color:
+          </div>
+          <div class="col" [ngStyle]="{'color': productDisplay.value.size !== 'none' ? '' : '#9e9c9c8c'}">size:
+            {{productDisplay.value.size}}</div>
+        </section>
+
+        <section class="row mt-4">
+          <div class="col">
+            qty:
+            <input name="quantity" style="width: 50px; text-align: center;" type="number" value="{{ form.quantity }}"
+              [(ngModel)]="form.quantity" required />
+          </div>
+          <div class="col">Purchasing Unit: {{productDisplay.value.unit}}</div>
+        </section>
+
+        <div class="btn-group btn-group-sm">
+          <button type="submit" [ngClass]="{'hidden': hasCartId}" class="btn btn-primary btn-sm">Add To Cart <i
+              class="fa fa-shopping-cart fa-lg"></i></button>
+          <button (click)="updateCart(productDisplay.value)" type="button" [ngClass]="{'hidden': !hasCartId}"
+            class="btn btn-primary btn-sm">
+            Update Item
+            &nbsp;<i class="fa fa-save fa-lg"></i></button>
+          <button type="button" class="btn btn-outline-secondary btn-sm">Add To Template</button>
+        </div>
+
+      </div>
+      <!-- end row -->
+
     </div>
   </form>
 </ng-template>

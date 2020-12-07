@@ -24,6 +24,7 @@
     "@types/lodash": "^4.14.165",
     "bootstrap": "^4.4.1",
     "lodash": "^4.17.20",
+    "ng-sidebar": "^9.4.2",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

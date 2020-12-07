@@ -53,11 +53,13 @@ export class ProductDisplayComponent implements OnInit {
   ngOnInit() {
     this.productPageService.checkCart(this.productId);
     this.productPageService.productPage.subscribe(sub => {
-      console.log({ sub });
       this.productDisplay.next(sub);
-      // this.documentLoaded = true;
-      this.form.quantity = sub.quantity;
-      if (!isEmpty(sub.cartId)) {
+      console.log({ sub });
+
+      /* TODO: What is this */
+      // this.form.quantity = sub.quantity;
+
+      if (sub !== undefined && !isEmpty(sub.cartId)) {
         this.hasCartId = true;
       }
     });
@@ -68,6 +70,8 @@ export class ProductDisplayComponent implements OnInit {
   }
 
   updateCart(item: Product) {
+    console.log('what is newItem:', { item });
+
     this.savingDocument = true;
     // TODO: item is not being used
     const item2Update: Product = { ...this.productDisplay.value, quantity: this.form.quantity };
