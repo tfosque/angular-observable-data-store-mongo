@@ -1,3 +1,4 @@
+import { ProductDisplay } from 'src/app/models/product-display';
 import { HttpClient } from '@angular/common/http';
 import { ProductStoreService } from './product-store.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -14,7 +15,7 @@ const defaultProduct = {
   providedIn: 'root'
 })
 export class ProductPageService {
-  productPage: BehaviorSubject<Product> = new BehaviorSubject<Product>(defaultProduct);
+  productPage: BehaviorSubject<ProductDisplay> = new BehaviorSubject<ProductDisplay>(defaultProduct);
 
   constructor(
     private readonly cartService: CartService,
@@ -30,7 +31,7 @@ export class ProductPageService {
     });
   }
 
-  setProductPage(product: Product) {
+  setProductPage(product: ProductDisplay) {
     this.productPage.next(product);
   }
   setProductPagePid(productId: string) {

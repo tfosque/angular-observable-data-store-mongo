@@ -5,7 +5,8 @@
 </div>
 
 <ng-template #pdp>
-  <form class="col mt-3" #pdfForm="ngForm" (ngSubmit)="submitPDPQauntity(pdfForm)">
+  <form *ngIf="(productDisplay | async)?.images" class="col mt-3" #pdfForm="ngForm"
+    (ngSubmit)="submitPDPQauntity(pdfForm)">
     <div class="container">
 
       <div class="row mt-5">

@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/cart-item';
 import { NgForm } from '@angular/forms';
 import { isEmpty } from 'lodash';
+import { ProductDisplay } from 'src/app/models/product-display';
 
 const defaultProduct = {
-  name: ''
+  name: '',
+  images: { thumb: '', url: '' }
 };
 
 @Component({
@@ -18,7 +20,7 @@ const defaultProduct = {
   styleUrls: ['./product-display.component.scss']
 })
 export class ProductDisplayComponent implements OnInit {
-  productDisplay = new BehaviorSubject<Product>(defaultProduct);
+  productDisplay = new BehaviorSubject<ProductDisplay>(defaultProduct);
   productId = '';
   product: Product = new Product();
   product$: Observable<Product>;
@@ -31,14 +33,16 @@ export class ProductDisplayComponent implements OnInit {
   navigated = 0;
   form: any = {};
   savingDocument = false;
+  documentLoaded = false;
 
   constructor(
     private readonly cartService: CartService,
-    private readonly productService: ProductStoreService,
+    // private readonly productService: ProductStoreService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly productPageService: ProductPageService
   ) {
+    // Init quantity
     this.form.quantity = 0;
     this.route.params.subscribe(params => {
       this.productId = params.productId;
@@ -51,6 +55,7 @@ export class ProductDisplayComponent implements OnInit {
     this.productPageService.productPage.subscribe(sub => {
       console.log({ sub });
       this.productDisplay.next(sub);
+      // this.documentLoaded = true;
       this.form.quantity = sub.quantity;
       if (!isEmpty(sub.cartId)) {
         this.hasCartId = true;

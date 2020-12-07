@@ -17,11 +17,11 @@ export class Product {
   selected?: boolean;
 }
 
-interface Image {
+export interface Image {
   thumb: string;
   url: string;
 }
 
-interface Colors {
+export interface Colors {
   hue: string;
 }
