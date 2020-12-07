@@ -19,7 +19,7 @@ export class CartService {
 
   // Exposed observable (read-only).
   readonly cart$ = this.cart.asObservable();
-  cartValue = this.cart.value;
+  //  cartValue = this.cart.value;
   readonly cartCount$ = this.cartCount.asObservable();
 
   constructor(

@@ -6,6 +6,7 @@ import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/cart-item';
 import { NgForm } from '@angular/forms';
+import { isEmpty } from 'lodash';
 
 const defaultProduct = {
   name: ''
@@ -19,12 +20,12 @@ const defaultProduct = {
 export class ProductDisplayComponent implements OnInit {
   productDisplay = new BehaviorSubject<Product>(defaultProduct);
   productId = '';
-  // product = new BehaviorSubject<Product>(defaultProduct);
   product: Product = new Product();
   product$: Observable<Product>;
   // cartItems: Product[] = [];
   productItems: Product[] = [];
-  isItemInCart = false;
+  // isItemInCart = false;
+  hasCartId = false;
   subscription: Subscription;
   browserRefresh = false;
   navigated = 0;
@@ -40,7 +41,6 @@ export class ProductDisplayComponent implements OnInit {
     this.form.quantity = 0;
     this.route.params.subscribe(params => {
       this.productId = params.productId;
-      // console.log({ params });
       // this.productPageService.setProductPagePid(this.productId);
     });
   }
@@ -48,8 +48,12 @@ export class ProductDisplayComponent implements OnInit {
   ngOnInit() {
     this.productPageService.checkCart(this.productId);
     this.productPageService.productPage.subscribe(sub => {
-      // console.log({ sub })
+      console.log({ sub })
       this.productDisplay.next(sub);
+      this.form.quantity = sub.quantity;
+      if (!isEmpty(sub.cartId)) {
+        this.hasCartId = true;
+      }
     });
   }
   addItemToCart(newQty: number) {

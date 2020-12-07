@@ -57,7 +57,6 @@ export class ProductPageService {
     if (empty) {
       /* XHR request */
       this.http.get('http://localhost:3000/api/productsDBs').subscribe(productData => {
-        // console.log({ productData }, 'fetchProducts.....');
         const productP = find(productData, ['productId', productId]);
         console.log({ productP }, 'fetchProducts.....');
         this.productPage.next(productP);
