@@ -42,7 +42,7 @@ export class ProductDisplayComponent implements OnInit {
     private readonly productPageService: ProductPageService
   ) {
     // Init quantity
-    this.form.quantity = 0;
+    // this.form.quantity = 0;
     this.route.params.subscribe(params => {
       this.productId = params.productId;
       // this.productPageService.setProductPagePid(this.productId);
@@ -53,7 +53,7 @@ export class ProductDisplayComponent implements OnInit {
     this.productPageService.checkCart(this.productId);
     this.productPageService.productPage.subscribe(sub => {
       this.productDisplay.next(sub);
-
+      this.form.quantity = sub.quantity;
       if (sub !== undefined && !isEmpty(sub.cartId)) {
         this.hasCartId = true;
       }

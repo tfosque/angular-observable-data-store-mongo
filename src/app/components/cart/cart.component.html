@@ -26,8 +26,12 @@
             </div>
           </div>
         </div>
-        <ng-container style="max-height: 547px; overflow-y: scroll;">
-          <app-list [items]="cartItems$ | async"></app-list>
+        <ng-container>
+          <div style="overflow-y: hidden;">
+            <div style="max-height: 488px; overflow-y: scroll;">
+              <app-list [items]="cartItems$ | async"></app-list>
+            </div>
+          </div>
         </ng-container>
         <!-- more icon -->
         <div class="col-12 pt-3 pb-3 text-center">more <i class="fa fa-caret-down"></i></div>
