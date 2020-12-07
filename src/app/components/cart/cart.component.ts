@@ -50,7 +50,7 @@ export class CartComponent implements OnInit {
   public getProducts() {
     this.productObsStore.setPageSize({ size: 50, start: 0, end: 50 });
     /* Get Products */
-    this.productObsStore.getProducts()
+    this.productObsStore.fetchProducts()
       .subscribe(nextProducts => {
         this.products.next(nextProducts);
         // console.log({ nextProducts });

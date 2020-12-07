@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/product.service';
+import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class ThumbsComponent implements OnInit {
   // @Input() resetSelected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   selected = false;
   constructor(
-    private readonly productService: ProductService
+    private readonly productService: ProductStoreService
   ) { }
 
   ngOnInit(): void { }

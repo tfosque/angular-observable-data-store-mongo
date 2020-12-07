@@ -7,18 +7,21 @@
 <ng-template #pdp>
   <form class="col mt-3" #pdfForm="ngForm" (ngSubmit)="submitPDPQauntity(pdfForm)">
     <div class="container">
+
       <div class="row mt-5">
         <div class="col-sm-12 col-lg-4">
-          <img class="rounded" width="320" height="240" [src]="productDisplay.value.images.thumb" alt="">
-          <div><small>{{productDisplay.value.sku}}</small></div>
+          <img class="rounded" width="300" height="300" [src]="productDisplay.value.images.thumb" alt="">
+          <div><small>{{productDisplay.value.productId}}</small></div>
+          <div>id: {{ productDisplay.value.id }}</div>
+          <div>cartId: {{ productDisplay.value.cartId }}</div>
         </div>
         <div class="col-sm-12 col-lg-8 pdp-item">
           <div>{{productDisplay.value.name}}</div>
-          <div>#{{productDisplay.value.sku}}
+          <div>#{{productDisplay.value.sku}} | <small class="text-secondary">{{productDisplay.value.id}}</small>
           </div>
 
           <section class="row" [ngStyle]="{'color': productDisplay.value.sku === 'green' ? '' : '#9e9c9c8c'}">
-            <div class="col-12">color options:</div>
+            <div class="col-12">color options: </div>
             <div class="col-1 mr-1 ml-1 mt-2" *ngFor="let color of productDisplay.value.colors"
               style="width: 200px; height: 75px;" [ngStyle]="{'background': color.hue}"></div>
           </section>
@@ -42,9 +45,11 @@
           </section>
 
           <div class="btn-group btn-group-sm">
-            <button type="submit" class="btn btn-primary btn-sm">Add To Cart <i
+            <button type="submit" [ngClass]="{'hidden': isItemInCart}" class="btn btn-primary btn-sm">Add To Cart <i
                 class="fa fa-shopping-cart fa-lg"></i></button>
-            <button type="button" class="btn btn-outline-secondary btn-sm">Update Item
+            <button (click)="updateCart(productDisplay.value)" type="button" [ngClass]="{'hidden': !isItemInCart}"
+              class="btn btn-primary btn-sm">
+              Update Item
               &nbsp;<i class="fa fa-save fa-lg"></i></button>
             <button type="button" class="btn btn-outline-secondary btn-sm">Add To Template</button>
           </div>

@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/product.service';
+import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class PaginationComponent implements OnInit {
   currActive = '1';
   constructor(
-    private readonly productService: ProductService
+    private readonly productService: ProductStoreService
   ) { }
 
   ngOnInit(): void {
@@ -19,7 +19,7 @@ export class PaginationComponent implements OnInit {
     // console.log(typeof evt.target.text);
     const page = evt.target.text;
     this.currActive = page;
-    this.productService.setPageSize(parseInt(page, 10));
+    // this.productStoreService.setPageSize(parseInt(page, 10));
   }
 
 }

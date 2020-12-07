@@ -5,13 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AmazonService } from './services/amazon.service';
-import { CartComponent } from './components/cart/cart.component';
-
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-
 import { AppRoutingModule } from './app-routing.module';
+
+import { CartComponent } from './components/cart/cart.component';
 import { AppComponent } from './app.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { LoginComponent } from './components/login/login.component';
@@ -73,7 +70,7 @@ import { ProductsComponent } from './components/products/products.component';
   exports: [
     CommonModule
   ],
-  providers: [AmazonService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

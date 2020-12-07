@@ -1,5 +1,6 @@
 export class Product {
   id?: number | string;
+  cartId?: number | string;
   name: string;
   desc?: string;
   price?: number;
@@ -24,23 +25,3 @@ interface Image {
 interface Colors {
   hue: string;
 }
-
-/* export interface Product {
-  id?: number | string;
-  name: string;
-  url?: string;
-  item?: string;
-  price: number;
-  sale?: boolean;
-  color?: string;
-  sku?: string;
-  qty?: number;
-  quantity?: number;
-  link?: string;
-  selected?: boolean;
-  imgUrl?: string;
-} */
-
-/* export interface ProductItem extends Product {
-  misc?: any;
-} */

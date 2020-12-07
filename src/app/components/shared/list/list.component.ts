@@ -1,3 +1,4 @@
+import { ProductPageService } from './../../../services/product-page.service';
 import { Router } from '@angular/router';
 import { ProductStoreService } from './../../../services/product-store.service';
 import { CartService } from './../../../services/cart.service';
@@ -20,19 +21,20 @@ export class ListComponent implements OnInit {
   constructor(
     private readonly cartService: CartService,
     private readonly productService: ProductStoreService,
-    private readonly route: Router
+    private readonly route: Router,
+    private readonly productPageService: ProductPageService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   clearCart() {
     this.cartService.clearCart();
   }
 
   goToPDP(product: Product) {
-    console.log({ product });
-    this.productService.setProductPage(product);
+    // console.log({ product });
+    this.productPageService.setProductPage(product);
+    // this.productService.setProductPage(product);
     this.route.navigate(['products/details', product.productId]);
   }
 

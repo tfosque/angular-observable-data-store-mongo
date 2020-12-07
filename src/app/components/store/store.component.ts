@@ -1,5 +1,6 @@
+import { ProductPageService } from './../../services/product-page.service';
+import { NotificationService } from './../../services/notification.service';
 import { ProductStoreService } from './../../services/product-store.service';
-import { NotificationService } from 'src/app/services/notification.service';
 import { CartService } from './../../services/cart.service';
 import { MenuService } from './../../services/menu.service';
 import { Product } from 'src/app/models/cart-item';
@@ -32,6 +33,7 @@ export class StoreComponent implements OnInit {
     private readonly cartService: CartService,
     private readonly noteService: NotificationService,
     private readonly productStore: ProductStoreService,
+    private readonly productPageService: ProductPageService,
     private readonly route: Router
   ) { }
 
@@ -45,7 +47,7 @@ export class StoreComponent implements OnInit {
     });
 
     /* Get Products - productStore Service */
-    this.productStore.getProducts()
+    this.productStore.fetchProducts()
       .subscribe((products: Product[]) => {
         this.products.next(products);
       });
@@ -69,20 +71,18 @@ export class StoreComponent implements OnInit {
       this.selectedProductsCount = selectedCnt.length;
     });
 
+
     // TODO: Pattern
     /*  this.productStore.setPageSize({ size: 20, start: 0, end: 20 })
        .subscribe(z => {
          // console.log({ z });
        }); */
 
-    this.productStore.setPageSize({ size: 20, start: 0, end: 20 });
+    this.productStore.setPageSize({ size: 60, start: 0, end: 60 });
     this.productStore.productPagination$.subscribe(page => {
       // console.log({ page });
       this.productsPagination = page;
     });
-
-    console.log(this.currCart);
-
   }
   saveSelectionsToCart(savedSelections: Product[]): void {
     // console.log({ savedSelections });
@@ -119,11 +119,12 @@ export class StoreComponent implements OnInit {
 
   clearSelections() {
     this.productStore.clearSelections();
-    this.productStore.getProducts();
+    this.productStore.fetchProducts();
   }
 
   goToPDP(product: Product) {
-    this.productStore.setProductPage(product);
+    // this.productStore.setProductPage(product);
+    this.productPageService.setProductPage(product);
     this.route.navigate(['/products/details', product.productId]);
   }
 }

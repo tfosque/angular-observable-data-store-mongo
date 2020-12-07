@@ -1,6 +1,7 @@
 import { MenuService } from './../../services/menu.service';
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-main-nav',
@@ -10,9 +11,12 @@ import { CartService } from 'src/app/services/cart.service';
 export class MainNavComponent implements OnInit {
   cartCount = 0;
   activeMenuItem = '';
+  note = {};
   constructor(
     private readonly cartService: CartService,
-    private readonly menuService: MenuService
+    private readonly menuService: MenuService,
+
+    private readonly notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +30,11 @@ export class MainNavComponent implements OnInit {
     /* Set Active Menu */
     this.menuService.activeMenuItem.subscribe(item => {
       this.activeMenuItem = item;
+    });
+
+    this.notificationService.notification.subscribe(notes => {
+      console.log({ notes });
+      this.note = notes;
     });
   }
 

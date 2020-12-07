@@ -9,7 +9,8 @@ import { Notification } from './../../../models/notification';
   styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent implements OnInit {
-  public note = new BehaviorSubject<Notification>({ message: '', show: false });
+  @Input() note = new BehaviorSubject<Notification>({ message: '', show: false });
+  // public note = new BehaviorSubject<Notification>({ message: '', show: false });
 
 
   constructor(

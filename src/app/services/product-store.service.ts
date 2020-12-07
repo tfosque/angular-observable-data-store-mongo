@@ -8,10 +8,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProductStoreService {
-  private products$ = new Subject<Product[]>();
+  private products$ = new BehaviorSubject<Product[]>([]);
+
   private productsCnt$ = new Subject<number>();
   private selectedProductsCnt$ = new Subject<number>();
   private selectedProducts$ = new BehaviorSubject<Product[]>([]);
+  products = this.products$.asObservable();
   productPageSize$ = new BehaviorSubject<number>(100);
   productPagination$ = new BehaviorSubject<Pagination>({});
   defaulProduct = { name: '', price: 0, total: 0, quantity: 0, qty: 0 };
@@ -30,7 +32,7 @@ export class ProductStoreService {
     /* Set default ProductPageSize */
   }
 
-  getProducts(): Observable<Product[]> {
+  fetchProducts(): Observable<Product[]> {
     this.http.get('http://localhost:3000/api/productsDBs')
       .subscribe((data: Product[]) => {
         this.products$.next(data);
@@ -40,14 +42,18 @@ export class ProductStoreService {
     return this.products$.asObservable();
   }
 
-  getProduct(productId: string): Observable<Product> {
+  getProduct(productId: string): BehaviorSubject<Product> {
     // http://localhost:3000/api/carts/findOne?filter=%7B%22where%22%3A%20%7B%22productId%22%3A%20%22V-846498%22%7D%7D
     this.http.get(`http://localhost:3000/api/productsDBs/findOne?filter[where][productId]=${productId}`)
       .subscribe((data: Product) => {
         this.productPage$.next(data);
         // console.log('fetching a product......', { data });
       });
-    return this.productPage$.asObservable();
+    return this.productPage$;
+  }
+
+  getProductItems() {
+    return this.products;
   }
 
   getProductCnt() {
@@ -63,8 +69,6 @@ export class ProductStoreService {
     }
     const results = store.filter(i => i.id !== item.id);
     this.setProduct(results);
-    // console.log('product:service:', { item });
-    // console.log('product:service:length:', results.length);
   }
   //#endregion
 
@@ -108,7 +112,7 @@ export class ProductStoreService {
 
   reFetchProducts() {
     /* Add original products back 500 */
-    this.getProducts()
+    this.fetchProducts()
       .subscribe(productUpdate => {
         this.products$.next(productUpdate);
         this.updateProductCnt(productUpdate);
