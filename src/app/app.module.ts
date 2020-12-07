@@ -31,6 +31,8 @@ import { StoreComponent } from './components/store/store.component';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { ProductDisplayComponent } from './components/products/product-display/product-display.component';
 import { ProductsComponent } from './components/products/products.component';
+import { BrandsComponent } from './components/brands/brands.component';
+import { ProductOptionsComponent } from './components/products/product-options/product-options.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ProductsComponent } from './components/products/products.component';
     StoreComponent,
     ToastComponent,
     ProductDisplayComponent,
-    ProductsComponent
+    ProductsComponent,
+    BrandsComponent,
+    ProductOptionsComponent
   ],
   imports: [
     BrowserModule,
