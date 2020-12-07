@@ -2,7 +2,6 @@ import { ProductPageService } from './../../../services/product-page.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { ProductStoreService } from './../../../services/product-store.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/cart-item';
 import { NgForm } from '@angular/forms';
@@ -54,10 +53,6 @@ export class ProductDisplayComponent implements OnInit {
     this.productPageService.checkCart(this.productId);
     this.productPageService.productPage.subscribe(sub => {
       this.productDisplay.next(sub);
-      console.log({ sub });
-
-      /* TODO: What is this */
-      // this.form.quantity = sub.quantity;
 
       if (sub !== undefined && !isEmpty(sub.cartId)) {
         this.hasCartId = true;
